@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hype't - AI Motivator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+header{
+    height:70px;
+    background:#111827;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 40px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+    color:#38bdf8;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:.2s;
+}
+
+nav a:hover{
+    color:#38bdf8;
+}
+
+.container{
+    display:flex;
+    height:calc(100vh - 70px);
+}
+
+/* Sidebar */
+
+.sidebar{
+    width:250px;
+    background:#111827;
+    padding:30px;
+    border-right:1px solid rgba(255,255,255,.08);
+}
+
+.sidebar h3{
+    margin-bottom:20px;
+    color:#38bdf8;
+}
+
+.sidebar button{
+    width:100%;
+    margin-bottom:15px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#1e293b;
+    color:white;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.sidebar button:hover{
+    background:#38bdf8;
+}
+
+/* Main */
+
+main{
+    flex:1;
+    padding:35px;
+    overflow:auto;
+}
+
+.welcome{
+    margin-bottom:30px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:25px;
+}
+
+.card h2{
+    margin-bottom:10px;
+}
+
+.chat{
+    margin-top:30px;
+    background:#1e293b;
+    border-radius:15px;
+    padding:25px;
+}
+
+.chatbox{
+    height:300px;
+    background:#0f172a;
+    border-radius:12px;
+    margin:20px 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#64748b;
+}
+
+.input-area{
+    display:flex;
+    gap:10px;
+}
+
+.input-area input{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#0f172a;
+    color:white;
+}
+
+.input-area button{
+    padding:15px 25px;
+    border:none;
+    border-radius:10px;
+    background:#38bdf8;
+    color:white;
+    cursor:pointer;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    color:#64748b;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+
+<div class="logo">
+Hype't
+</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Progress</a>
+<a href="#">Goals</a>
+<a href="#">Community</a>
+<a href="#">Settings</a>
+</nav>
+
+</header>
+
+<div class="container">
+
+<div class="sidebar">
+
+<h3>Menu</h3>
+
+<button>🏠 Dashboard</button>
+
+<button>💬 AI Chat</button>
+
+<button>🎯 Daily Goals</button>
+
+<button>🔥 Motivation</button>
+
+<button>📊 Statistics</button>
+
+<button>🏆 Achievements</button>
+
+<button>⚙ Settings</button>
+
+</div>
+
+<main>
+
+<div class="welcome">
+<h1>Welcome Back 👋</h1>
+<p>Your AI motivator is almost ready.</p>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h2>🔥 Streak</h2>
+<p>7 Day Motivation Streak</p>
+</div>
+
+<div class="card">
+<h2>🎯 Today's Goal</h2>
+<p>Complete your biggest task.</p>
+</div>
+
+<div class="card">
+<h2>📈 Progress</h2>
+<p>82% Weekly Productivity</p>
+</div>
+
+</div>
+
+<div class="chat">
+
+<h2>AI Motivator</h2>
+
+<div class="chatbox">
+
+AI Chat Coming Soon...
+
+</div>
+
+<div class="input-area">
+
+<input
+type="text"
+placeholder="Talk to Hype't..."
+>
+
+<button>
+Send
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<footer>
+
+© 2026 Hype't • Your Personal AI Motivator
+
+</footer>
+
+</body>
+</html>
