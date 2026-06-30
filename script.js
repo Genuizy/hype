@@ -39,3 +39,43 @@ login();
 }
 
 });
+function addGoal(){
+
+    const input = document.getElementById("goalInput");
+    const text = input.value.trim();
+
+    if(text === "") return;
+
+    const li = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.textContent = text;
+    span.className = "goalText";
+
+    span.onclick = function(){
+        span.classList.toggle("completed");
+    };
+
+    const del = document.createElement("button");
+    del.textContent = "Delete";
+    del.className = "deleteBtn";
+
+    del.onclick = function(){
+        li.remove();
+    };
+
+    li.appendChild(span);
+    li.appendChild(del);
+
+    document.getElementById("goalList").appendChild(li);
+
+    input.value = "";
+}
+
+document.getElementById("goalInput").addEventListener("keypress", function(e){
+
+    if(e.key === "Enter"){
+        addGoal();
+    }
+
+});
