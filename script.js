@@ -1,4 +1,4 @@
-const PASSWORD = "choppagoat";
+const PASSWORD = "clockeddevelopment";
 
 window.onload = () => {
 
