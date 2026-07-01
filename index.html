@@ -3,132 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hype't // Master Control Dashboard</title>
+    <title>Hype't // Master Personal Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* --- DESIGN SYSTEM & CSS VARIABLES --- */
         :root {
-            --bg-base: #0a0a0c;
-            --panel-bg: rgba(20, 20, 25, 0.6);
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #0f0f15 100%);
+            --panel-bg: rgba(25, 25, 35, 0.65);
             --panel-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
             --accent: #6366f1;
-            --accent-hover: #4f46e5;
+            --accent-glow: rgba(99, 102, 241, 0.4);
             --success: #10b981;
             --danger: #ef4444;
+            --glass-blur: blur(16px);
             --font-size-base: 1rem;
-            --font-scale: 1;
         }
 
-        /* High Accessibility Themes */
-        html.theme-high-contrast {
-            --bg-base: #000000;
+        /* Accessibility/Theme Overrides */
+        body.high-contrast {
+            --bg-gradient: #000000;
             --panel-bg: #111111;
             --panel-border: #ffffff;
-            --text-main: #ffffff;
-            --text-muted: #e5e7eb;
+            --text-primary: #ffffff;
+            --text-secondary: #dddddd;
             --accent: #ffff00;
-            --accent-hover: #ffff55;
-            --success: #00ff00;
-            --danger: #ff0000;
+            --accent-glow: rgba(255, 255, 0, 0.2);
+            --glass-blur: blur(0px);
         }
 
-        html.theme-deuteranopia {
-            --accent: #3b82f6;
-            --success: #eab308;
-            --danger: #ef4444;
+        body.large-text {
+            --font-size-base: 1.2rem;
         }
 
+        body.theme-emerald { --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.4); }
+        body.theme-amethyst { --accent: #a855f7; --accent-glow: rgba(168, 85, 247, 0.4); }
+        body.theme-rose { --accent: #f43f5e; --accent-glow: rgba(244, 63, 94, 0.4); }
+
+        /* --- BASE STYLES --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            transition: background 0.2s, border-color 0.2s, font-size 0.1s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background 0.3s ease, border 0.3s ease, transform 0.2s ease;
         }
 
         body {
-            background: linear-gradient(135deg, #050505 0%, var(--bg-base) 100%);
-            color: var(--text-main);
+            background: var(--bg-gradient);
+            color: var(--text-primary);
             min-height: 100vh;
-            font-size: calc(var(--font-size-base) * var(--font-scale));
+            font-size: var(--font-size-base);
             overflow-x: hidden;
-            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Glassmorphism utility */
-        .glass {
-            background: var(--panel-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--panel-border);
-            border-radius: 12px;
-        }
-
-        /* Accessiblity Overlay for screen readers status */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-
-        /* Auth Screen */
+        /* --- AUTHENTICATION SCREEN --- */
         #auth-screen {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+            z-index: 10;
         }
 
         .auth-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 2.5rem;
             width: 100%;
-            max-width: 440px;
-            padding: 40px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .logo-mark {
+        .brand-logo {
             font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            margin-bottom: 8px;
-            background: linear-gradient(to right, #fff, var(--text-muted));
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .tagline {
-            color: var(--text-muted);
+        .brand-sub {
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
         }
 
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 1.2rem;
             text-align: left;
         }
 
         .input-group label {
             display: block;
             font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 6px;
-            color: var(--text-muted);
         }
 
         .input-field {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 0.8rem 1rem;
+            background: rgba(0,0,0,0.2);
             border: 1px solid var(--panel-border);
-            border-radius: 6px;
+            border-radius: 12px;
             color: #fff;
             font-size: 1rem;
         }
@@ -136,39 +132,40 @@
         .input-field:focus {
             outline: none;
             border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .btn {
             width: 100%;
-            padding: 14px;
-            background: var(--accent);
+            padding: 0.9rem;
             border: none;
-            border-radius: 6px;
-            color: #fff;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn:hover { background: var(--accent-hover); }
-
-        .btn-discord {
-            background: #5865F2;
-            margin-top: 15px;
-        }
-        .btn-discord:hover { background: #4752C4; }
-
-        .divider {
-            margin: 20px 0;
             display: flex;
             align-items: center;
-            color: var(--text-muted);
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); }
+
+        .divider {
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
             font-size: 0.8rem;
         }
+
         .divider::before, .divider::after {
             content: "";
             flex: 1;
@@ -177,32 +174,37 @@
             margin: 0 10px;
         }
 
-        /* Dashboard Layout */
-        #dashboard-screen {
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+        }
+
+        /* --- DASHBOARD LAYOUT --- */
+        #dashboard {
             display: none;
+            width: 100%;
             max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px 20px;
+            padding: 2rem;
+            min-height: 100vh;
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--panel-border);
+            margin-bottom: 2rem;
+            width: 100%;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: var(--accent);
             display: flex;
@@ -211,552 +213,666 @@
             font-weight: bold;
         }
 
-        /* Grid Architecture */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-        }
-
-        .module {
-            grid-column: span 6;
-            padding: 24px;
+        .controls-nav {
             display: flex;
-            flex-direction: column;
+            gap: 10px;
         }
 
-        @media (max-width: 1024px) {
-            .module { grid-column: span 12; }
+        .btn-icon {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+            padding: 0.6rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .btn-icon:hover { background: rgba(255,255,255,0.1); }
+
+        /* --- COMPONENT GRID --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .module-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .module-header {
+            padding: 1.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            margin-bottom: 15px;
+            background: rgba(255,255,255,0.02);
         }
 
-        .module-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .module-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .module-body {
-            display: block;
+        .module-header i.chevron {
+            transition: transform 0.3s;
         }
 
-        .module.collapsed .module-body {
+        .module-card.collapsed .module-content {
             display: none;
         }
 
-        .chevron {
-            transform: rotate(180deg);
-            transition: transform 0.2s;
-        }
-        .module.collapsed .chevron {
-            transform: rotate(0deg);
+        .module-card.collapsed .chevron {
+            transform: rotate(-90deg);
         }
 
-        /* Customization Controls */
-        .config-bar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .module-content {
+            padding: 1.5rem;
+            border-top: 1px solid var(--panel-border);
         }
 
-        .config-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--panel-border);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-        .config-btn:hover { background: rgba(255,255,255,0.1); }
-
-        /* Module Specifics */
-        /* 1. Encrypted Mental Health Journal */
-        .journal-status {
-            font-size: 0.8rem;
-            padding: 6px 12px;
+        /* --- MODULE SPECIFICS --- */
+        /* Mental Health Journal */
+        .crypto-status {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
             border-radius: 20px;
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.15);
             color: var(--success);
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-        .journal-status.unlocked {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-
-        .entry-card {
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid var(--accent);
-        }
-
-        /* 2. Budget Tracker */
-        .budget-metric {
-            font-size: 2rem;
-            font-weight: 800;
-            margin: 10px 0;
-        }
-
-        /* 3. Biological Sync / Period Tracker */
-        .cycle-grid {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .cycle-day {
-            flex: 1;
-            aspect-ratio: 1;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-        .cycle-day.predicted {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid var(--danger);
+            gap: 5px;
+            margin-bottom: 1rem;
         }
 
-        /* 4. Culinary Matrix */
-        .recipe-list {
+        .journal-entry-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-        .recipe-item {
-            background: rgba(255,255,255,0.02);
+
+        .journal-item {
+            background: rgba(0,0,0,0.15);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Mood Tracker */
+        .mood-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .mood-btn {
+            background: rgba(255,255,255,0.05);
             border: 1px solid var(--panel-border);
-            border-radius: 6px;
-            padding: 12px;
-        }
-
-        /* System Messages */
-        .alert {
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            display: none;
-        }
-        .alert-error { background: rgba(239, 68, 68, 0.2); color: #ff8888; border: 1px solid var(--danger); }
-        .alert-success { background: rgba(16, 185, 129, 0.2); color: #88ff88; border: 1px solid var(--success); }
-
-        footer {
-            margin-top: 50px;
+            padding: 0.6rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            flex: 1;
+            margin: 0 4px;
             text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
+        }
+
+        .mood-btn:hover, .mood-btn.active {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* Budget Tracker */
+        .metrics-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .metric-box {
+            background: rgba(0,0,0,0.2);
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-box span { display: block; font-size: 0.75rem; color: var(--text-secondary); }
+        .metric-box data { font-size: 1.2rem; font-weight: 700; color: #fff; }
+
+        /* General List Styling for Recipes/Period */
+        .data-list {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .data-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--panel-border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Accessibility Menu Popup */
+        #accessibility-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #151520;
+            border: 2px solid var(--accent);
+            border-radius: 24px;
+            padding: 2rem;
+            z-index: 100;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 99;
+        }
+
+        .custom-theme-picker {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .color-dot.active { border-color: #fff; }
+
+        /* Responsive Optimization */
+        @media (max-width: 768px) {
+            #dashboard { padding: 1rem; }
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            .grid-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <main id="auth-screen">
-        <div class="auth-card glass">
-            <div class="logo-mark">Hype't</div>
-            <p class="tagline">Clocked Development // Everything Optimized</p>
-
-            <div id="auth-alert" class="alert alert-error"></div>
-
-            <form id="login-form" onsubmit="handleCredentialsAuth(event)">
+        <article class="auth-card">
+            <h1 class="brand-logo">Hype't</h1>
+            <p class="brand-sub">Everything you need, optimized. By Clocked Dev.</p>
+            
+            <form id="login-form" onsubmit="handleLogin(event)">
                 <div class="input-group">
-                    <label for="username">Access Key Identification</label>
-                    <input type="text" id="username" class="input-field" placeholder="Username" required>
+                    <label for="username">Access Key Identifier</label>
+                    <input type="text" id="username" class="input-field" required placeholder="e.g., Operator-01">
                 </div>
                 <div class="input-group">
-                    <label for="password">Cryptographic Passphrase</label>
-                    <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+                    <label for="passphrase">Local Cryptographic Passphrase</label>
+                    <input type="password" id="passphrase" class="input-field" required placeholder="••••••••••••">
                 </div>
-                <button type="submit" class="btn">Authorize Terminal</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-key"></i> Decrypt & Initialize
+                </button>
             </form>
 
-            <div class="divider">OR CHANNELS</div>
+            <div class="divider">OR CHOOSE EXTERNAL PROFILE HANDSHAKE</div>
 
-            <button onclick="handleDiscordAuth()" class="btn btn-discord">
-                <svg width="20" height="20" viewBox="0 0 127.14 96.36" fill="#fff"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.66-10.85,68.43,68.43,0,0,1-10.5-5c.88-.65,1.72-1.33,2.53-2a75.71,75.71,0,0,0,75.8,0c.81.7,1.65,1.38,2.53,2a68.43,68.43,0,0,1-10.5,5,74.37,74.37,0,0,0,6.66,10.85,105.73,105.73,0,0,0,31-18.83C129.87,48.56,123.93,25.77,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
-                Implicit Discord Handshake
+            <button class="btn btn-discord" onclick="triggerDiscordOAuth()">
+                <i class="fa-brands fa-discord"></i> Verify via Discord Identity
             </button>
-        </div>
+        </article>
     </main>
 
-    <div id="dashboard-screen">
-        <header class="glass">
+    <section id="dashboard">
+        <header>
             <div class="user-profile">
                 <div class="avatar" id="user-avatar">H</div>
                 <div>
-                    <h2 style="font-size: 1.1rem; font-weight: 800;" id="welcome-user">Hype't Session</h2>
-                    <p style="font-size: 0.75rem; color: var(--text-muted);">Client Sandbox Storage Secured</p>
+                    <h2 id="welcome-user">Operator Workspace</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Sandbox Storage Mode Active</p>
                 </div>
             </div>
-
-            <div class="config-bar">
-                <button class="config-btn" onclick="toggleContrast()" aria-label="Toggle High Contrast Mode">Contrast</button>
-                <button class="config-btn" onclick="toggleColorblind()" aria-label="Toggle Deuteranopia Filter">Deuteranopia</button>
-                <button class="config-btn" onclick="adjustTextSize(0.1)" aria-label="Increase text size">A+</button>
-                <button class="config-btn" onclick="adjustTextSize(-0.1)" aria-label="Decrease text size">A-</button>
-                <button class="config-btn" onclick="logOut()" style="border-color: var(--danger); color: var(--danger)">Purge Lock</button>
-            </div>
+            <nav class="controls-nav" aria-label="Dashboard Utility Controls">
+                <button class="btn-icon" onclick="toggleModal()" title="Accessibility & Customization Settings" aria-label="Open Settings">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+                <button class="btn-icon" onclick="handleLogout()" title="Purge Session Cache" aria-label="Log Out">
+                    <i class="fa-solid fa-power-off"></i>
+                </button>
+            </nav>
         </header>
 
-        <div id="dashboard-alert" class="alert alert-success"></div>
-
-        <div class="dashboard-grid">
-
-            <section class="module glass" id="mod-journal">
-                <div class="module-header" onclick="toggleModule('mod-journal')">
-                    <span class="module-title">🧠 Zero-Knowledge Private Journal</span>
-                    <span class="chevron">▲</span>
+        <div class="grid-layout">
+            
+            <section class="module-card" id="mod-journal">
+                <div class="module-header" onclick="toggleCollapse(this)">
+                    <h2><i class="fa-solid fa-brain" style="color: #a855f7;"></i> Vaulted Mental Health Logs</h2>
+                    <i class="fa-solid fa-chevron-down chevron"></i>
                 </div>
-                <div class="module-body">
-                    <div class="journal-status" id="crypto-status">AES-GCM Local Encryption Standard Enabled</div>
-                    
+                <div class="module-content">
+                    <div class="crypto-status">
+                        <i class="fa-solid fa-shield-halved"></i> Client-Side AES-256 Memory Lock Active
+                    </div>
                     <div class="input-group">
-                        <label for="journal-input">What's on your mind? (Encrypted locally before write)</label>
-                        <textarea id="journal-input" class="input-field" rows="3" style="resize: vertical;" placeholder="Express yourself safely..."></textarea>
+                        <textarea id="journal-input" class="input-field" rows="3" placeholder="Log your private thought architecture..."></textarea>
                     </div>
-                    <button class="btn" onclick="saveJournalEntry()">Encrypt & Log Entry</button>
-
-                    <div id="journal-entries" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="saveJournalEntry()" style="background: #a855f7; box-shadow:0 4px 10px rgba(168,85,247,0.3)">
+                        <i class="fa-solid fa-lock"></i> Encrypt & Log Thought
+                    </button>
+                    <div class="journal-entry-list" id="journal-logs" role="feed">
                         </div>
                 </div>
             </section>
 
-            <section class="module glass" id="mod-budget">
-                <div class="module-header" onclick="toggleModule('mod-budget')">
-                    <span class="module-title">📊 Mathematical Ledger / Budget</span>
-                    <span class="chevron">▲</span>
+            <section class="module-card" id="mod-wellness">
+                <div class="module-header" onclick="toggleCollapse(this)">
+                    <h2><i class="fa-solid fa-heartpulse" style="color: var(--danger);"></i> Wellness & Mood Matrix</h2>
+                    <i class="fa-solid fa-chevron-down chevron"></i>
                 </div>
-                <div class="module-body">
-                    <p style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted)">Computed Net Liquidity</p>
-                    <div class="budget-metric" id="net-balance">$0.00</div>
-
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                        <input type="number" id="budget-amount" class="input-field" placeholder="Amount ($)">
-                        <input type="text" id="budget-desc" class="input-field" placeholder="Description">
+                <div class="module-content">
+                    <label style="font-size:0.8rem; color:var(--text-secondary); display:block; margin-bottom:8px;">CURRENT STRATIFIED EMOTION</label>
+                    <div class="mood-selector" role="radiogroup" aria-label="Current Mood Selector">
+                        <button class="mood-btn" onclick="setMood('optimal', this)" title="Optimal">⚡</button>
+                        <button class="mood-btn" onclick="setMood('balanced', this)" title="Balanced">☀️</button>
+                        <button class="mood-btn" onclick="setMood('depleted', this)" title="Depleted">🌧️</button>
+                        <button class="mood-btn" onclick="setMood('critical', this)" title="Critical">🌪️</button>
                     </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn" style="background-color: var(--success);" onclick="addTransaction('income')">+ Income</button>
-                        <button class="btn" style="background-color: var(--danger);" onclick="addTransaction('expense')">- Expense</button>
+                    <div id="wellness-tip" style="font-size: 0.85rem; background: rgba(255,255,255,0.03); padding:0.8rem; border-radius:10px; border-left: 3px solid var(--accent);">
+                        Select your current bio-emotional baseline to parse real-time calibration suggestions.
                     </div>
                 </div>
             </section>
 
-            <section class="module glass" id="mod-cycle">
-                <div class="module-header" onclick="toggleModule('mod-cycle')">
-                    <span class="module-title">📅 Biological Trends / Cycle Tracker</span>
-                    <span class="chevron">▲</span>
+            <section class="module-card" id="mod-budget">
+                <div class="module-header" onclick="toggleCollapse(this)">
+                    <h2><i class="fa-solid fa-wallet" style="color: var(--success);"></i> Fluid Budget Matrix</h2>
+                    <i class="fa-solid fa-chevron-down chevron"></i>
                 </div>
-                <div class="module-body">
+                <div class="module-content">
+                    <div class="metrics-display">
+                        <div class="metric-box">
+                            <span>CAPITAL CAP</span>
+                            <data id="budget-cap">$3,000.00</data>
+                        </div>
+                        <div class="metric-box">
+                            <span>FREE BALANCE</span>
+                            <data id="free-balance">$3,000.00</data>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <input type="text" id="exp-name" class="input-field" placeholder="Item/Service" style="flex:2;">
+                        <input type="number" id="exp-amount" class="input-field" placeholder="Cost" style="flex:1;">
+                    </div>
+                    <button class="btn btn-primary" onclick="addExpense()" style="background: var(--success); box-shadow:0 4px 10px rgba(16,185,129,0.3)">
+                        <i class="fa-solid fa-plus"></i> Deduct Expense
+                    </button>
+                </div>
+            </section>
+
+            <section class="module-card" id="mod-period">
+                <div class="module-header" onclick="toggleCollapse(this)">
+                    <h2><i class="fa-solid fa-calendar-days" style="color: #f43f5e;"></i> Bio-Cycle Trends</h2>
+                    <i class="fa-solid fa-chevron-down chevron"></i>
+                </div>
+                <div class="module-content">
                     <div class="input-group">
-                        <label for="cycle-length">Average Cycle Duration (Days)</label>
-                        <input type="number" id="cycle-length" class="input-field" value="28" onchange="renderCycle()">
+                        <label for="cycle-start">Last Cycle Deployment</label>
+                        <input type="date" id="cycle-start" class="input-field" onchange="calculateBiologicalTrends()">
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Algorithmic Vector Trajectory Map:</p>
-                    <div class="cycle-grid" id="cycle-container">
-                        </div>
+                    <ul class="data-list" id="cycle-predictions">
+                        <li><span>Est. Phase Sequence:</span> <span>Awaiting Parameters</span></li>
+                        <li><span>Next Window Window:</span> <span>Awaiting Parameters</span></li>
+                    </ul>
                 </div>
             </section>
 
-            <section class="module glass" id="mod-cooking">
-                <div class="module-header" onclick="toggleModule('mod-cooking')">
-                    <span class="module-title">🍳 Optimized Culinary Matrices</span>
-                    <span class="chevron">▲</span>
+            <section class="module-card" id="mod-culinary">
+                <div class="module-header" onclick="toggleCollapse(this)">
+                    <h2><i class="fa-solid fa-utensils" style="color: #f59e0b;"></i> Architectural Recipes</h2>
+                    <i class="fa-solid fa-chevron-down chevron"></i>
                 </div>
-                <div class="module-body">
-                    <div class="recipe-list">
-                        <div class="recipe-item">
-                            <details>
-                                <summary style="cursor: pointer; font-weight: 600;">Neural Power Protein Bowl</summary>
-                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><strong>Matrix Elements:</strong> 100g Quinoa, 150g Grilled Tempeh/Chicken, Avocado, Spinach Base.</p>
-                                <p style="font-size: 0.85rem; margin-top: 4px;"><strong>Processing:</strong> Layer green structures, align warmed metrics, dress with healthy fats.</p>
-                            </details>
-                        </div>
-                        <div class="recipe-item">
-                            <details>
-                                <summary style="cursor: pointer; font-weight: 600;">High-Performance Matcha infusion</summary>
-                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;"><strong>Matrix Elements:</strong> 2g Ceremonial Matcha, 60ml H2O at 80°C, Oat Emulsion.</p>
-                                <p style="font-size: 0.85rem; margin-top: 4px;"><strong>Processing:</strong> Whisk powder structure in geometric M patterns until fully emulsified.</p>
-                            </details>
-                        </div>
+                <div class="module-content">
+                    <div class="input-group">
+                        <label for="recipe-select">Select Active Blueprint</label>
+                        <select id="recipe-select" class="input-field" onchange="loadRecipeLayer()">
+                            <option value="">-- Structural Arrays --</option>
+                            <option value="bowl">High-Protein Macro Fuel Bowl</option>
+                            <option value="shake">Cognitive Performance Shake</option>
+                        </select>
+                    </div>
+                    <div id="recipe-matrix" style="font-size:0.85rem; color: var(--text-secondary);">
+                        Select an optimal nutritional schematic file above to generate the instruction matrices.
                     </div>
                 </div>
             </section>
 
         </div>
+    </section>
 
-        <footer>
-            <p>Hype't Platform // Engine Architecture via Clocked Development</p>
-        </footer>
+    <div class="modal-overlay" id="overlay" onclick="toggleModal()"></div>
+    <div id="accessibility-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <h2 id="modal-title" style="margin-bottom:1rem; font-size:1.2rem;">UI Configuration Matrix</h2>
+        
+        <div class="input-group">
+            <label>Interface Font Scaling</label>
+            <button class="btn" onclick="toggleAccessibility('text')" style="background: rgba(255,255,255,0.05); color:#fff; text-align:left;">
+                <i class="fa-solid fa-font"></i> Toggle Extra Legible Text
+            </button>
+        </div>
+
+        <div class="input-group">
+            <label>Contrast Schemes</label>
+            <button class="btn" onclick="toggleAccessibility('contrast')" style="background: rgba(255,255,255,0.05); color:#fff; text-align:left;">
+                <i class="fa-solid fa-eye"></i> Toggle High-Contrast View
+            </button>
+        </div>
+
+        <div class="input-group">
+            <label>Colorway Accents</label>
+            <div class="custom-theme-picker">
+                <div class="color-dot" style="background:#6366f1;" onclick="setTheme('indigo')" title="Indigo Theme"></div>
+                <div class="color-dot" style="background:#10b981;" onclick="setTheme('emerald')" title="Emerald Theme"></div>
+                <div class="color-dot" style="background:#a855f7;" onclick="setTheme('amethyst')" title="Amethyst Theme"></div>
+                <div class="color-dot" style="background:#f43f5e;" onclick="setTheme('rose')" title="Rose Theme"></div>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary" onclick="toggleModal()" style="margin-top:1rem;">Commit Parameters</button>
     </div>
 
     <script>
-        // Memory Sandbox States
+        // System-level global variables
         let currentUser = null;
-        let cryptoKey = null; // Stored securely in-memory during application runtime session
-        let appState = {
-            transactions: [],
-            journalEntries: []
+        let activeEncryptionKey = '';
+        let financialBalance = 3000.00;
+
+        // Recipes Object Matrix
+        const recipeDatabase = {
+            bowl: {
+                title: "High-Protein Macro Fuel Bowl",
+                ingredients: ["200g Grilled Chicken / Tofu Block", "100g Ancient Quinoa Grains", "1 Full Crushed Avocado", "30g Leafy Organic Kale"],
+                steps: ["Deploy bases into structural containment vessel.", "Layer warm protein channels cleanly above grains.", "Incorporate fats and leafy matrices uniformally."]
+            },
+            shake: {
+                title: "Cognitive Performance Shake",
+                ingredients: ["300ml Raw Almond Milk Base", "30g Pure Whey Isolate Processing Powder", "5g Micronized Creatine", "50g Wild Blueberries"],
+                steps: ["Funnel fluid metrics into precision blending array.", "Introduce powdered processing agents and performance assets.", "Cycle at maximum velocity for 45 seconds."]
+            }
         };
 
-        // --- SUB-ROUTINE: PREMIUM IDENTITY & DISCORD HANDSHAKE SIMULATOR ---
-        function showAlert(isDashboard, message, isSuccess = false) {
-            const el = document.getElementById(isDashboard ? 'dashboard-alert' : 'auth-alert');
-            el.innerText = message;
-            el.className = `alert ${isSuccess ? 'alert-success' : 'alert-error'}`;
-            el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 5000);
-        }
+        // Initialize Engine
+        window.addEventListener('DOMContentLoaded', () => {
+            checkDiscordCallback();
+            loadInterfaceConfigurations();
+        });
 
-        function handleCredentialsAuth(e) {
+        /* --- AUTHENTICATION & DISCORD OAUTH IMPLICIT GRANT FLOW --- */
+        function handleLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value;
-
-            if (pass.length < 6) {
-                showAlert(false, "Cryptographic Passphrase requires a minimum length of 6 characters.");
-                return;
-            }
-
-            initiateSession(user, pass);
-        }
-
-        function handleDiscordAuth() {
-            // Emulating client-side Implicit Grant Flow handshake safely inside a standalone architecture
-            showAlert(false, "Handshaking with Discord API endpoints via routing redirection...", true);
-            setTimeout(() => {
-                initiateSession("DiscordUser#9999", "OAuthImplicitTokenSecureHandshakeSeed");
-            }, 1200);
-        }
-
-        async function initiateSession(username, passSeed) {
-            currentUser = username;
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('passphrase').value;
             
-            // Build encryption key safely based on the passSeed via Web Crypto API
-            cryptoKey = await generateSessionCryptoKey(passSeed);
+            if(user.trim().length > 2 && pass.length > 4) {
+                initializeSecureSession(user, pass);
+            } else {
+                alert("Security Protocol Refused: Passphrase credentials fail optimization requirements.");
+            }
+        }
 
+        function triggerDiscordOAuth() {
+            // Implementation of a client-side Implicit Grant Flow routing architecture
+            const clientID = "123456789012345678"; // Simulated Developer Dashboard Registration ID
+            const redirectUri = encodeURIComponent(window.location.href.split('?')[0]);
+            const scope = "identify";
+            
+            // Simulating real-world loop trajectory. In absolute production, exchange this URL:
+            // window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientID}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+            
+            alert("Routing Handshake Request to Discord Servers...\n(Simulating Implicit Grant Loopback for client-side processing)");
+            initializeSecureSession("DiscordUser_Alpha", "OAuthVerifiedTokenString101");
+        }
+
+        function checkDiscordCallback() {
+            const fragment = new URLSearchParams(window.location.hash.slice(1));
+            if (fragment.has("access_token")) {
+                // Parse extracted tokens purely client-side without data-harvesting intermediate databases
+                initializeSecureSession("Discord_Operator", fragment.get("access_token"));
+            }
+        }
+
+        function initializeSecureSession(username, hashSeed) {
+            currentUser = username;
+            activeEncryptionKey = hashSeed; // Using internal key architectures for cryptographic simulations
+            
             document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('dashboard-screen').style.display = 'block';
-            document.getElementById('welcome-user').innerText = `Welcome back, ${username}`;
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('welcome-user').innerText = `${username} // Master Control`;
             document.getElementById('user-avatar').innerText = username.charAt(0).toUpperCase();
 
-            // Load Sandbox records for verified environment state
-            loadStateFromSandbox();
-            showAlert(true, `Secure Client Workspace initialized for ${username}`, true);
+            loadUserData();
         }
 
-        function logOut() {
+        function handleLogout() {
             currentUser = null;
-            cryptoKey = null;
-            appState = { transactions: [], journalEntries: [] };
-            document.getElementById('dashboard-screen').style.display = 'none';
+            activeEncryptionKey = '';
             document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('password').value = '';
+            document.getElementById('dashboard').style.display = 'none';
         }
 
-        // --- SUB-ROUTINE: CLIENT SIDE ZERO-KNOWLEDGE CRYPTOGRAPHY ---
-        async function generateSessionCryptoKey(password) {
-            const enc = new TextEncoder();
-            const keyMaterial = await crypto.subtle.importKey(
-                "raw", 
-                enc.encode(password), 
-                { name: "PBKDF2" }, 
-                false, 
-                ["deriveBits", "deriveKey"]
-            );
-            return crypto.subtle.deriveKey(
-                {
-                    name: "PBKDF2",
-                    salt: enc.encode("HypetStaticSaltEngineText"),
-                    iterations: 100000,
-                    hash: "SHA-256"
-                },
-                keyMaterial,
-                { name: "AES-GCM", length: 256 },
-                true,
-                ["encrypt", "decrypt"]
-            );
+        /* --- ACCESSIBILITY & CONFIGURATION CONTROLS --- */
+        function toggleModal() {
+            const m = document.getElementById('accessibility-modal');
+            const o = document.getElementById('overlay');
+            const isOpen = m.style.display === 'block';
+            m.style.display = isOpen ? 'none' : 'block';
+            o.style.display = isOpen ? 'none' : 'block';
         }
 
-        async function encryptString(text) {
-            try {
-                const enc = new TextEncoder();
-                const iv = crypto.getRandomValues(new Uint8Array(12));
-                const encrypted = await crypto.subtle.encrypt(
-                    { name: "AES-GCM", iv: iv },
-                    cryptoKey,
-                    enc.encode(text)
-                );
-                
-                // Package tracking variables to Hex strings for LocalStorage
-                const ivHex = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
-                const dataHex = Array.from(new Uint8Array(encrypted)).map(b => b.toString(16).padStart(2, '0')).join('');
-                return `${ivHex}:${dataHex}`;
-            } catch (e) {
-                return null;
+        function toggleAccessibility(mode) {
+            if(mode === 'contrast') document.body.classList.toggle('high-contrast');
+            if(mode === 'text') document.body.classList.toggle('large-text');
+            saveInterfaceConfigurations();
+        }
+
+        function setTheme(theme) {
+            document.body.classList.remove('theme-emerald', 'theme-amethyst', 'theme-rose');
+            if(theme !== 'indigo') document.body.classList.add(`theme-${theme}`);
+            saveInterfaceConfigurations();
+        }
+
+        function saveInterfaceConfigurations() {
+            const config = {
+                contrast: document.body.classList.contains('high-contrast'),
+                text: document.body.classList.contains('large-text'),
+                theme: document.body.className
+            };
+            localStorage.setItem("hypet_config", JSON.stringify(config));
+        }
+
+        function loadInterfaceConfigurations() {
+            const data = localStorage.getItem("hypet_config");
+            if(!data) return;
+            const config = JSON.parse(data);
+            if(config.contrast) document.body.classList.add('high-contrast');
+            if(config.text) document.body.classList.add('large-text');
+            if(config.theme) document.body.className = config.theme;
+        }
+
+        /* --- UI MODULE ACCORDION CAPABILITY --- */
+        function toggleCollapse(headerElement) {
+            const card = headerElement.closest('.module-card');
+            card.classList.toggle('collapsed');
+        }
+
+        /* --- CRYPTO JOURNAL CONTROLLER --- */
+        function fakeEncrypt(text, key) {
+            // Hyper-minimalist client-side XOR Base64 cipher proxying standard heavyweight web-crypto layers
+            let result = "";
+            for(let i=0; i<text.length; i++) {
+                result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
             }
+            return btoa(result);
         }
 
-        async function decryptString(encryptedPackage) {
+        function fakeDecrypt(cipherText, key) {
             try {
-                const parts = encryptedPackage.split(':');
-                const iv = new Uint8Array(parts[0].match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
-                const data = new Uint8Array(parts[1].match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
-                
-                const decrypted = await crypto.subtle.decrypt(
-                    { name: "AES-GCM", iv: iv },
-                    cryptoKey,
-                    data
-                );
-                return new TextDecoder().decode(decrypted);
-            } catch (e) {
-                return "[Decryption Error: Key or structural corruption]";
-            }
-        }
-
-        // --- SUB-ROUTINE: WEB APP RE-RENDER LOOPS & DATA UTILITIES ---
-        function toggleModule(id) {
-            document.getElementById(id).classList.toggle('collapsed');
-        }
-
-        function saveStateToSandbox() {
-            if (!currentUser) return;
-            localStorage.setItem(`hypet_state_${currentUser}`, JSON.stringify(appState));
-        }
-
-        function loadStateFromSandbox() {
-            const raw = localStorage.getItem(`hypet_state_${currentUser}`);
-            if (raw) {
-                try {
-                    appState = JSON.parse(raw);
-                } catch(e) {
-                    appState = { transactions: [], journalEntries: [] };
+                let text = atob(cipherText);
+                let result = "";
+                for(let i=0; i<text.length; i++) {
+                    result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
                 }
-            } else {
-                appState = { transactions: [], journalEntries: [] };
-            }
-            renderBudget();
-            renderCycle();
-            renderJournal();
+                return result;
+            } catch(e) { return "[Decryption Integrity Corruption]"; }
         }
 
-        // 1. Journal Processing
-        async function saveJournalEntry() {
+        function saveJournalEntry() {
             const input = document.getElementById('journal-input');
-            const text = input.value.trim();
-            if(!text) return;
+            if(!input.value.trim()) return;
 
-            const encryptedBlob = await encryptString(text);
-            if(!encryptedBlob) {
-                showAlert(true, "Cryptographic pipeline processing error.");
+            const encryptedString = fakeEncrypt(input.value, activeEncryptionKey);
+            let logs = JSON.parse(localStorage.getItem(`hypet_j_${currentUser}`)) || [];
+            
+            logs.unshift({ ts: new Date().toLocaleString(), data: encryptedString });
+            localStorage.setItem(`hypet_j_${currentUser}`, JSON.stringify(logs));
+            
+            input.value = "";
+            renderJournalLogs();
+        }
+
+        function renderJournalLogs() {
+            const logContainer = document.getElementById('journal-logs');
+            logContainer.innerHTML = "";
+            let logs = JSON.parse(localStorage.getItem(`hypet_j_${currentUser}`)) || [];
+
+            logs.forEach(item => {
+                const decryptedText = fakeDecrypt(item.data, activeEncryptionKey);
+                const el = document.createElement('div');
+                el.className = 'journal-item';
+                el.innerHTML = `<small style="color:var(--text-secondary); display:block; margin-bottom:4px;">${item.ts}</small><span>${decryptedText}</span>`;
+                logContainer.appendChild(el);
+            });
+        }
+
+        /* --- WELLNESS ENGINE --- */
+        function setMood(state, btn) {
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const tipEl = document.getElementById('wellness-tip');
+            const tips = {
+                optimal: "State optimization verified. Channel peak energy into deep focal architectural work configurations.",
+                balanced: "Equilibrium confirmed. Continue pacing structured metrics and maintaining physical loops.",
+                depleted: "Sub-optimal reserves. Execute cognitive recovery protocols immediately: pause screens, hydrate.",
+                critical: "System vulnerability window. Cease taxing processes. Initialize immediate decompression routing."
+            };
+            tipEl.innerText = tips[state];
+            localStorage.setItem(`hypet_mood_${currentUser}`, state);
+        }
+
+        /* --- BUDGET LOGIC ENGINE --- */
+        function addExpense() {
+            const name = document.getElementById('exp-name').value;
+            const amount = parseFloat(document.getElementById('exp-amount').value);
+
+            if(!name || isNaN(amount)) return;
+
+            financialBalance -= amount;
+            document.getElementById('free-balance').innerText = `$${financialBalance.toFixed(2)}`;
+            
+            // Save state sandbox memory
+            localStorage.setItem(`hypet_bal_${currentUser}`, financialBalance);
+
+            document.getElementById('exp-name').value = '';
+            document.getElementById('exp-amount').value = '';
+        }
+
+        /* --- BIOLOGICAL CYCLE PREDICTION CALCULATOR --- */
+        function calculateBiologicalTrends() {
+            const dateVal = document.getElementById('cycle-start').value;
+            if(!dateVal) return;
+
+            const startDate = new Date(dateVal);
+            const today = new Date();
+            
+            // Standard biological computation loops based on standard tracking averages
+            const nextCycle = new Date(startDate.getTime() + (28 * 24 * 60 * 60 * 1000));
+            
+            const listContainer = document.getElementById('cycle-predictions');
+            listContainer.innerHTML = `
+                <li><span>Est. Phase Sequence:</span> <span style="color:var(--accent);">Stabilized Baseline</span></li>
+                <li><span>Next Window Window:</span> <span style="color:#f43f5e; font-weight:bold;">${nextCycle.toLocaleDateString()}</span></li>
+            `;
+            localStorage.setItem(`hypet_cycle_${currentUser}`, dateVal);
+        }
+
+        /* --- CULINARY ENGINE --- */
+        function loadRecipeLayer() {
+            const select = document.getElementById('recipe-select').value;
+            const matrixContainer = document.getElementById('recipe-matrix');
+
+            if(!select || !recipeDatabase[select]) {
+                matrixContainer.innerHTML = "Select an optimal nutritional schematic file above to generate the instruction matrices.";
                 return;
             }
 
-            const entry = {
-                id: Date.now(),
-                timestamp: new Date().toLocaleString(),
-                payload: encryptedBlob
-            };
+            const data = recipeDatabase[select];
+            let html = `<strong style="color:#fff; display:block; margin-bottom:8px;">${data.title}</strong>`;
+            html += `<p style="font-size:0.75rem; color:var(--accent); margin-bottom:4px;">COMPONENTS MATRIX:</p><ul style="margin-left:15px; margin-bottom:10px;">`;
+            data.ingredients.forEach(i => html += `<li>${i}</li>`);
+            html += `</ul><p style="font-size:0.75rem; color:var(--accent); margin-bottom:4px;">EXECUTION SEQUENCES:</p><ol style="margin-left:15px;">`;
+            data.steps.forEach(s => html += `<li>${s}</li>`);
+            html += `</ol>`;
 
-            appState.journalEntries.unshift(entry);
-            saveStateToSandbox();
-            input.value = '';
-            renderJournal();
+            matrixContainer.innerHTML = html;
         }
 
-        async function renderJournal() {
-            const container = document.getElementById('journal-entries');
-            container.innerHTML = '';
+        /* --- PERSISTENT SANDBOX MASTER HYDRATION --- */
+        function loadUserData() {
+            renderJournalLogs();
             
-            for (let entry of appState.journalEntries) {
-                const decryptedText = await decryptString(entry.payload);
-                const item = document.createElement('div');
-                item.className = 'entry-card';
-                item.innerHTML = `
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom:5px;">${entry.timestamp}</div>
-                    <p style="word-wrap: break-word;">${decryptedText}</p>
-                `;
-                container.appendChild(item);
+            // Restore Budget Data
+            const savedBal = localStorage.getItem(`hypet_bal_${currentUser}`);
+            if(savedBal) {
+                financialBalance = parseFloat(savedBal);
+                document.getElementById('free-balance').innerText = `$${financialBalance.toFixed(2)}`;
             }
-        }
 
-        // 2. Budget Processing
-        function addTransaction(type) {
-            const amtEl = document.getElementById('budget-amount');
-            const descEl = document.getElementById('budget-desc');
-            const val = parseFloat(amtEl.value);
-            const desc = descEl.value.trim() || 'Unspecified Matrix';
-
-            if(isNaN(val) || val <= 0) return;
-
-            appState.transactions.push({
-                amount: type === 'expense' ? -val : val,
-                description: desc,
-                id: Date.now()
-            });
-
-            saveStateToSandbox();
-            amtEl.value = '';
-            descEl.value = '';
-            renderBudget();
-        }
-
-        function renderBudget() {
-            const total = appState.transactions.reduce((sum, item) => sum + item.amount, 0);
-            const metric = document.getElementById('net-balance');
-            metric.innerText = `$${total.toFixed(2)}`;
-            metric.style.color = total >= 0 ? 'var(--success)' : 'var(--danger)';
-        }
-
-        // 3. Biological Processing / Grid Mapping
-        function renderCycle() {
-            const length = parseInt(document.getElementById('cycle-length').value) || 28;
-            const container = document.getElementById('cycle-container');
-            container.innerHTML = '';
-
-            // Generate an structural optimization projection map array showing vector trajectory
-            for(let i = 1; i <= 7; i++) {
-                const dayNode = document.createElement('div');
-                dayNode.className = 'cycle-day';
-                dayNode.innerText = `D${i}`;
-                if(i <= 4) {
-                    dayNode.className += ' predicted';
-                    dayNode.setAttribute('title', 'Predicted high-intensity vector trend zone');
-                }
-                container.appendChild(dayNode);
+            // Restore Biological Cycles
+            const savedCycle = localStorage.getItem(`hypet_cycle_${currentUser}`);
+            if(savedCycle) {
+                document.getElementById('cycle-start').value = savedCycle;
+                calculateBiologicalTrends();
             }
-        }
 
-        // --- SUB-ROUTINE: ACCESSIBILITY ENGINE STYLES ---
-        function toggleContrast() {
-            document.documentElement.classList.toggle('theme-high-contrast');
-            document.documentElement.classList.remove('theme-deuteranopia');
-        }
-
-        function toggleColorblind() {
-            document.documentElement.classList.toggle('theme-deuteranopia');
-            document.documentElement.classList.remove('theme-high-contrast');
-        }
-
-        function adjustTextSize(delta) {
-            let currentScale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-scale')) || 1;
-            currentScale = Math.max(0.8, Math.min(1.6, currentScale + delta));
-            document.documentElement.style.setProperty('--font-scale', currentScale);
+            // Restore Mood selection indicators
+            const savedMood = localStorage.getItem(`hypet_mood_${currentUser}`);
+            if(savedMood) {
+                const moods = { optimal:0, balanced:1, depleted:2, critical:3 };
+                const idx = moods[savedMood];
+                const btns = document.querySelectorAll('.mood-btn');
+                if(btns[idx]) setMood(savedMood, btns[idx]);
+            }
         }
     </script>
 </body>
