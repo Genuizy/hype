@@ -1,1 +1,0 @@
-const App={init(){console.log("Starter scaffold loaded.");}};window.addEventListener("DOMContentLoaded",()=>App.init());
