@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hype't | Supreme Life Dashboard</title>
+    <title>Hype't | Premium Dashboard</title>
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --panel-color: #141414;
-            --accent-color: #ffcc00; /* Supreme Gold/Yellow */
+            --bg-color: #030303;
+            --panel-color: #0b0b0b;
+            --accent-color: #ffd700; /* Deep Premium Gold */
+            --accent-glow: rgba(255, 215, 0, 0.25);
             --text-color: #ffffff;
-            --text-muted: #888888;
-            --border-color: #222222;
+            --text-muted: #666666;
+            --border-color: #161616;
             --success-color: #00ff66;
+            --glass-bg: rgba(10, 10, 10, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.03);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: '-apple-system', BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
@@ -32,95 +35,174 @@
             overflow-x: hidden;
         }
 
-        /* --- LOCK SCREEN --- */
+        /* --- HIGH-END AUTH SCREEN --- */
         #lock-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--bg-color);
+            background: radial-gradient(circle at 50% -20%, #1c1807 0%, #030303 65%);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px;
         }
 
-        .lock-container {
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            padding: 40px;
-            background: var(--panel-color);
-            border: 1px solid var(--accent-color);
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.1);
-        }
-
-        .lock-container h1 {
-            font-size: 2.5rem;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .lock-container h1 span {
-            color: var(--accent-color);
-        }
-
-        .lock-container p {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
-
-        .lock-input {
+        .auth-container {
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 28px;
             width: 100%;
-            padding: 15px;
-            background: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: #fff;
+            max-width: 460px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            padding: 45px 35px;
             text-align: center;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            transition: border 0.3s;
+            position: relative;
         }
 
-        .lock-input:focus {
+        /* Ambient subtle gold glow behind card */
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: -10%; left: -10%; right: -10%; bottom: -10%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .brand-logo h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            background: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-logo h1 span {
+            background: linear-gradient(135deg, #fff2aa 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* Tab Switcher */
+        .auth-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .auth-tab.active {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--accent-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Form Group Inputs */
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
             outline: none;
             border-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+            background: rgba(0, 0, 0, 0.7);
         }
 
-        .lock-btn {
+        .submit-btn {
             width: 100%;
-            padding: 15px;
-            background: var(--accent-color);
+            padding: 16px;
+            background: linear-gradient(135deg, #fff099 0%, var(--accent-color) 100%);
             color: #000;
             border: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 15px;
         }
 
-        .lock-btn:hover {
-            background: #e6b800;
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
         }
 
-        .lock-btn:active {
-            transform: scale(0.98);
-        }
-
-        .error-msg {
-            color: #ff3333;
-            font-size: 0.85rem;
-            margin-top: 10px;
+        .error-banner {
+            color: #ff4444;
+            font-size: 0.8rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
             display: none;
+            text-transform: uppercase;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
 
         /* --- MAIN DASHBOARD --- */
@@ -128,10 +210,10 @@
             display: none;
             width: 100%;
             max-width: 1000px;
-            margin: 40px auto;
+            margin: 60px auto;
             padding: 20px;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
         }
 
         header {
@@ -162,13 +244,13 @@
             margin-bottom: 20px;
             background: var(--panel-color);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             transition: border-color 0.3s;
         }
 
         .dropdown-container:hover {
-            border-color: #333;
+            border-color: #252525;
         }
 
         .dropdown-header {
@@ -178,11 +260,11 @@
             align-items: center;
             cursor: pointer;
             user-select: none;
-            background: linear-gradient(90deg, #141414 0%, #1a1a1a 100%);
+            background: linear-gradient(90deg, #0b0b0b 0%, #111111 100%);
         }
 
         .dropdown-header h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -191,7 +273,7 @@
 
         .dropdown-header h3 span.icon {
             color: var(--accent-color);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
         .arrow {
@@ -212,17 +294,116 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.4s ease;
-            background: #0d0d0d;
+            background: #050505;
             padding: 0 25px;
         }
 
         .dropdown-container.active .dropdown-content {
-            max-height: 2000px; /* Large fallback box capacity */
+            max-height: 4000px;
             padding: 25px;
             border-top: 1px solid var(--border-color);
         }
 
-        /* --- INNER MODULE STYLES --- */
+        /* --- RECIPES CARD LOOK --- */
+        .recipe-vault-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .recipe-item-card {
+            background: #0c0c0c;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .recipe-item-card:hover { border-color: #333; }
+
+        .recipe-card-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(255,255,255,0.01);
+        }
+
+        .recipe-card-header h4 {
+            font-size: 1.1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recipe-badge {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            border: 1px solid rgba(255,215,0,0.3);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .recipe-card-body {
+            display: none;
+            padding: 20px;
+            background: #040404;
+            border-top: 1px solid var(--border-color);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .recipe-sections {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .recipe-sections { grid-template-columns: 1fr; }
+        }
+
+        .recipe-meta-title {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 4px;
+        }
+
+        .ingredients-list, .steps-list { list-style: none; }
+        .ingredients-list li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+            border-bottom: 1px dashed #161616;
+        }
+        .steps-list li {
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #ddd;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 25px;
+        }
+        .steps-list li::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0; top: 1px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        /* --- GLOBAL INTERNAL STYLES --- */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -233,21 +414,12 @@
             .grid-2 { grid-template-columns: 1fr; }
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
         input[type="text"], input[type="number"], input[type="date"], textarea, select {
             width: 100%;
             padding: 12px;
-            background: #141414;
+            background: #0b0b0b;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             color: white;
             margin-bottom: 15px;
         }
@@ -262,7 +434,7 @@
             background: transparent;
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             text-transform: uppercase;
@@ -276,13 +448,13 @@
         }
 
         .placeholder-ai {
-            border: 1px dashed #333;
+            border: 1px dashed #222;
             padding: 15px;
-            border-radius: 6px;
+            border-radius: 8px;
             text-align: center;
             color: var(--text-muted);
             font-style: italic;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-top: 15px;
         }
 
@@ -291,50 +463,54 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid #141414;
         }
 
-        .list-item:last-child { border-bottom: none; }
+        .strike { text-decoration: line-through; color: var(--text-muted); }
+        .badge-status { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
 
-        .strike {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .badge-status {
-            font-size: 0.8rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        /* --- TRADEMARK FOOTER --- */
         footer {
             text-align: center;
             margin-top: 60px;
             padding: 20px 0;
             border-top: 1px solid var(--border-color);
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        footer span {
-            color: var(--accent-color);
-        }
+        footer span { color: var(--accent-color); }
     </style>
 </head>
 <body>
 
-    <!-- LOCK SCREEN -->
+    <!-- HIGH END LUXURY AUTH SCREEN -->
     <div id="lock-screen">
-        <div class="lock-container">
-            <h1>Hype<span>'t</span></h1>
-            <p>SUPREME LIFE HUB &bull; ENCRYPTED</p>
-            <input type="password" id="passcode" class="lock-input" placeholder="ENTER ACCESS CODE">
-            <button class="lock-btn" onclick="unlockDashboard()">Unlock Hub</button>
-            <div id="error-msg" class="error-msg">Access Denied. Incorrect Passcode.</div>
+        <div class="auth-container">
+            <div class="brand-logo">
+                <h1>Hype<span>'t</span></h1>
+            </div>
+            <div class="brand-subtitle">Clocked Development Vault</div>
+
+            <!-- Authentic Mode Toggles -->
+            <div class="auth-tabs">
+                <button id="tab-login" class="auth-tab active" onclick="switchAuthMode('login')">Sign In</button>
+                <button id="tab-register" class="auth-tab" onclick="switchAuthMode('register')">Create Account</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Vault Username</label>
+                <input type="text" id="vault-user" class="input-field" placeholder="e.g. CatgirlKaryl" autocomplete="off">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label>Access Key / Password</label>
+                <input type="password" id="vault-pass" class="input-field" placeholder="••••••••••••">
+            </div>
+
+            <button id="auth-action-btn" class="submit-btn" onclick="authenticateVault()">Authorize Session</button>
+            <div id="error-banner" class="error-banner">Invalid Identity Specifications.</div>
         </div>
     </div>
 
@@ -426,12 +602,8 @@
                     <div class="list-item"><span>Quick Rinse & Skin Routine</span><span style="color: var(--text-muted);">Daily at 21:30</span></div>
                 </div>
                 <div class="grid-2" style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                    <div>
-                        <input type="text" id="shower-title" placeholder="Routine type...">
-                    </div>
-                    <div>
-                        <input type="text" id="shower-time" placeholder="Days/Time (e.g. Sat at 10:00)">
-                    </div>
+                    <div><input type="text" id="shower-title" placeholder="Routine type..."></div>
+                    <div><input type="text" id="shower-time" placeholder="Days/Time (e.g. Sat at 10:00)"></div>
                 </div>
                 <button class="btn-small" onclick="addShowerSchedule()">Add Routine</button>
             </div>
@@ -483,22 +655,45 @@
                 <div class="arrow"></div>
             </div>
             <div class="dropdown-content">
-                <div class="grid-2">
-                    <div>
-                        <h4 style="margin-bottom: 10px; color: var(--accent-color);">Saved Vault Recipes</h4>
-                        <div id="recipe-list">
-                            <div class="list-item"><span>Truffle Mushroom Risotto</span></div>
-                            <div class="list-item"><span>Supreme Garlic Ribeye Steak</span></div>
+                <div class="recipe-vault-grid" id="recipe-vault">
+                    <div class="recipe-item-card">
+                        <div class="recipe-card-header" onclick="toggleRecipeBody(this)">
+                            <h4><span>🍄</span> Truffle Mushroom Risotto</h4>
+                            <span class="recipe-badge">Open Recipe</span>
+                        </div>
+                        <div class="recipe-card-body">
+                            <div class="recipe-sections">
+                                <div>
+                                    <div class="recipe-meta-title">Ingredients</div>
+                                    <ul class="ingredients-list">
+                                        <li>1.5 cups Arborio Rice</li>
+                                        <li>4 cups Warm Vegetable Broth</li>
+                                        <li>200g Mixed Wild Mushrooms</li>
+                                        <li>2 tbsp Truffle Oil</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="recipe-meta-title">Preparation Steps</div>
+                                    <ol class="steps-list">
+                                        <li data-step="1.">Sauté onions and sliced mushrooms in olive oil.</li>
+                                        <li data-step="2.">Add Arborio rice, stirring quickly for 2 minutes.</li>
+                                        <li data-step="3.">Slowly add broth until completely absorbed. Fold in truffle oil.</li>
+                                    </ol>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <label>Quick Add Recipe</label>
-                        <input type="text" id="recipe-title" placeholder="Recipe Title">
-                        <textarea rows="2" id="recipe-ingredients" placeholder="Ingredients list..."></textarea>
-                        <button class="btn-small" onclick="addRecipe()">Save Dish</button>
-                    </div>
                 </div>
-                <div class="placeholder-ai">AI Integration pending: Auto-generate recipe variants based on left-over budget groceries.</div>
+
+                <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-top: 25px;">
+                    <label>Recipe Title</label>
+                    <input type="text" id="recipe-title" placeholder="e.g. Garlic Ribeye Steak">
+                    <label>Ingredients (Comma Separated)</label>
+                    <textarea rows="2" id="recipe-ingredients" placeholder="Steak, Garlic, Butter..."></textarea>
+                    <label>Instructions (One per line)</label>
+                    <textarea rows="3" id="recipe-instructions" placeholder="Sear steak in pan.&#10;Baste with melted garlic butter."></textarea>
+                    <button class="btn-small" onclick="addRecipe()">Store Recipe</button>
+                </div>
             </div>
         </div>
 
@@ -509,29 +704,45 @@
                 <div class="arrow"></div>
             </div>
             <div class="dropdown-content">
-                <label>Scratchpad (Auto-saves to browser memory)</label>
-                <textarea rows="6" id="scratchpad" oninput="saveNotes()" placeholder="Spill your ideas, code snippets, or confidential details here..."></textarea>
+                <label>Scratchpad (Persistent browser memory storage)</label>
+                <textarea rows="6" id="scratchpad" oninput="saveNotes()"></textarea>
                 <div style="color: var(--success-color); font-size: 0.8rem;" id="save-status">Saved ✓</div>
             </div>
         </div>
 
-        <!-- TRADEMARK FOOTER -->
         <footer>
             &trade; Hype't is a registered trademark of <span>Clocked Development</span> &copy; 2026. All Rights Reserved.
         </footer>
     </div>
 
     <script>
-        // Check Passcode function
-        function unlockDashboard() {
-            const code = document.getElementById('passcode').value;
-            const lockScreen = document.getElementById('lock-screen');
-            const dashboard = document.getElementById('dashboard');
-            const errorMsg = document.getElementById('error-msg');
+        let authMode = 'login';
 
-            if (code === 'clockeddevelopment') {
+        function switchAuthMode(mode) {
+            authMode = mode;
+            document.getElementById('tab-login').classList.toggle('active', mode === 'login');
+            document.getElementById('tab-register').classList.toggle('active', mode === 'register');
+            document.getElementById('auth-action-btn').innerText = mode === 'login' ? 'Authorize Session' : 'Register Secure ID';
+            document.getElementById('error-banner').style.display = 'none';
+        }
+
+        function authenticateVault() {
+            const user = document.getElementById('vault-user').value.trim();
+            const pass = document.getElementById('vault-pass').value;
+            const errorBanner = document.getElementById('error-banner');
+
+            if (authMode === 'register') {
+                errorBanner.innerText = "Registration Core is Closed. Use Approved Developer Identity.";
+                showError();
+                return;
+            }
+
+            if (user === 'CatgirlKaryl' && pass === 'clockeddevelopment') {
+                const lockScreen = document.getElementById('lock-screen');
+                const dashboard = document.getElementById('dashboard');
+                
                 lockScreen.style.opacity = '0';
-                lockScreen.style.transform = 'scale(1.05)';
+                lockScreen.style.transform = 'scale(1.03)';
                 
                 setTimeout(() => {
                     lockScreen.style.display = 'none';
@@ -539,154 +750,139 @@
                     dashboard.style.display = 'block';
                     setTimeout(() => {
                         dashboard.style.opacity = '1';
-                        // Initialization calculations
                         calculateBudget();
                         calculatePeriod();
                         loadNotes();
                     }, 50);
-                }, 500);
+                }, 600);
             } else {
-                errorMsg.style.display = 'block';
-                document.getElementById('passcode').value = '';
+                errorBanner.innerText = "Access Denied. Invalid Identity Specifications.";
+                showError();
             }
         }
 
-        // Dropdown toggle mechanism
-        function toggleDropdown(element) {
-            const container = element.parentElement;
-            container.classList.toggle('active');
+        function showError() {
+            const banner = document.getElementById('error-banner');
+            banner.style.display = 'block';
+            banner.style.animation = 'none';
+            setTimeout(() => { banner.style.animation = ''; }, 10);
+            document.getElementById('vault-pass').value = '';
         }
 
-        // BUDGET MECHANICS
+        function toggleDropdown(element) {
+            element.parentElement.classList.toggle('active');
+        }
+
+        function toggleRecipeBody(hdr) {
+            const bdy = hdr.nextElementSibling;
+            bdy.style.display = bdy.style.display === "block" ? "none" : "block";
+            hdr.querySelector('.recipe-badge').innerText = bdy.style.display === "block" ? "Close" : "Open Recipe";
+        }
+
+        function addRecipe() {
+            const title = document.getElementById('recipe-title').value.trim();
+            const ingIn = document.getElementById('recipe-ingredients').value.trim();
+            const insIn = document.getElementById('recipe-instructions').value.trim();
+            if(!title || !ingIn || !insIn) return;
+
+            let ingH = '', insH = '';
+            ingIn.split(',').forEach(i => { if(i.trim()) ingH += `<li>${i.trim()}</li>`; });
+            insIn.split('\n').forEach((s, idx) => { if(s.trim()) insH += `<li data-step="${idx+1}.">${s.trim()}</li>`; });
+
+            const item = document.createElement('div');
+            item.className = 'recipe-item-card';
+            item.innerHTML = `
+                <div class="recipe-card-header" onclick="toggleRecipeBody(this)">
+                    <h4><span>🍳</span> ${title}</h4>
+                    <span class="recipe-badge">Open Recipe</span>
+                </div>
+                <div class="recipe-card-body">
+                    <div class="recipe-sections">
+                        <div><div class="recipe-meta-title">Ingredients</div><ul class="ingredients-list">${ingH}</ul></div>
+                        <div><div class="recipe-meta-title">Preparation Steps</div><ol class="steps-list">${insH}</ol></div>
+                    </div>
+                </div>`;
+            document.getElementById('recipe-vault').appendChild(item);
+            document.getElementById('recipe-title').value = '';
+            document.getElementById('recipe-ingredients').value = '';
+            document.getElementById('recipe-instructions').value = '';
+        }
+
+        // BUDGET SYSTEM
         let totalExpenses = 0;
         function calculateBudget() {
-            const income = parseFloat(document.getElementById('budget-income').value) || 0;
-            const net = income - totalExpenses;
-            const balanceEl = document.getElementById('budget-balance');
-            balanceEl.innerText = `$${net}`;
-            balanceEl.style.color = net >= 0 ? 'var(--success-color)' : '#ff3333';
+            const inc = parseFloat(document.getElementById('budget-income').value) || 0;
+            const net = inc - totalExpenses;
+            document.getElementById('budget-balance').innerText = `$${net}`;
+            document.getElementById('budget-balance').style.color = net >= 0 ? 'var(--success-color)' : '#ff3333';
         }
-
         function addExpense() {
             const name = document.getElementById('expense-name').value;
-            const amount = parseFloat(document.getElementById('expense-amount').value);
-            
-            if(name && amount) {
-                totalExpenses += amount;
-                const list = document.getElementById('expense-list');
-                const item = document.createElement('div');
-                item.className = 'list-item';
-                item.innerHTML = `<span>${name}</span><span style="color: #ff3333;">-$${amount}</span>`;
-                list.appendChild(item);
-                
+            const amt = parseFloat(document.getElementById('expense-amount').value);
+            if(name && amt) {
+                totalExpenses += amt;
+                const el = document.createElement('div');
+                el.className = 'list-item';
+                el.innerHTML = `<span>${name}</span><span style="color:#ff3333;">-$${amt}</span>`;
+                document.getElementById('expense-list').appendChild(el);
                 calculateBudget();
                 document.getElementById('expense-name').value = '';
                 document.getElementById('expense-amount').value = '';
             }
         }
 
-        // PERIOD MECHANICS
+        // PERIOD PREDICTOR
         function calculatePeriod() {
-            const dateVal = document.getElementById('period-date').value;
-            const cycleDays = parseInt(document.getElementById('period-cycle').value) || 28;
-            if (dateVal) {
-                const lastDate = new Date(dateVal);
-                lastDate.setDate(lastDate.getDate() + cycleDays);
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                document.getElementById('next-period-prediction').innerText = lastDate.toLocaleDateString('en-US', options);
+            const dt = document.getElementById('period-date').value;
+            const cyc = parseInt(document.getElementById('period-cycle').value) || 28;
+            if (dt) {
+                const next = new Date(dt);
+                next.setDate(next.getDate() + cyc);
+                document.getElementById('next-period-prediction').innerText = next.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
             }
         }
 
-        // SHOWER SCHEDULE
         function addShowerSchedule() {
-            const title = document.getElementById('shower-title').value;
-            const time = document.getElementById('shower-time').value;
-            if(title && time) {
-                const item = document.createElement('div');
-                item.className = 'list-item';
-                item.innerHTML = `<span>${title}</span><span style="color: var(--accent-color);">${time}</span>`;
-                document.getElementById('shower-list').appendChild(item);
-                document.getElementById('shower-title').value = '';
-                document.getElementById('shower-time').value = '';
+            const t = document.getElementById('shower-title').value;
+            const tm = document.getElementById('shower-time').value;
+            if(t && tm) {
+                const el = document.createElement('div'); el.className = 'list-item';
+                el.innerHTML = `<span>${t}</span><span style="color:var(--accent-color);">${tm}</span>`;
+                document.getElementById('shower-list').appendChild(el);
+                document.getElementById('shower-title').value = ''; document.getElementById('shower-time').value = '';
             }
         }
 
-        // LIFE GOALS
         function addLifeGoal() {
-            const title = document.getElementById('goal-title').value;
-            const status = document.getElementById('goal-status').value;
-            let color = 'var(--text-muted)';
-            if(status === 'In Progress') color = '#00ff66';
-            if(status === 'Planning') color = 'var(--accent-color)';
-
-            if(title) {
-                const item = document.createElement('div');
-                item.className = 'list-item';
-                item.innerHTML = `<span>${title}</span><span class="badge-status" style="color:${color}; border:1px solid ${color};">${status}</span>`;
-                document.getElementById('goals-list').appendChild(item);
-                document.getElementById('goal-title').value = '';
-            }
+            const t = document.getElementById('goal-title').value;
+            const s = document.getElementById('goal-status').value;
+            if(!t) return;
+            const el = document.createElement('div'); el.className = 'list-item';
+            el.innerHTML = `<span>${t}</span><span class="badge-status" style="color:var(--accent-color); border:1px solid var(--accent-color);">${s}</span>`;
+            document.getElementById('goals-list').appendChild(el);
+            document.getElementById('goal-title').value = '';
         }
 
-        // BUCKET LIST MECHANICS
-        let bucketCount = 2;
-        function toggleBucket(id, checkbox) {
-            const label = document.getElementById(id);
-            if(checkbox.checked) {
-                label.className = 'strike';
-            } else {
-                label.className = '';
-            }
-        }
-
+        function toggleBucket(id, cb) { document.getElementById(id).className = cb.checked ? 'strike' : ''; }
         function addBucketItem() {
-            const val = document.getElementById('bucket-input').value;
-            if(val) {
-                bucketCount++;
-                const id = `b${bucketCount}`;
-                const item = document.createElement('div');
-                item.className = 'list-item';
-                item.innerHTML = `<span id="${id}">${val}</span><input type="checkbox" onchange="toggleBucket('${id}', this)">`;
-                document.getElementById('bucket-list').appendChild(item);
-                document.getElementById('bucket-input').value = '';
-            }
+            const val = document.getElementById('bucket-input').value; if(!val) return;
+            const id = 'b' + Math.random().toString(36).substr(2, 5);
+            const el = document.createElement('div'); el.className = 'list-item';
+            el.innerHTML = `<span id="${id}">${val}</span><input type="checkbox" onchange="toggleBucket('${id}', this)">`;
+            document.getElementById('bucket-list').appendChild(el);
+            document.getElementById('bucket-input').value = '';
         }
 
-        // COOKING RECIPES
-        function addRecipe() {
-            const title = document.getElementById('recipe-title').value;
-            if(title) {
-                const item = document.createElement('div');
-                item.className = 'list-item';
-                item.innerHTML = `<span>${title}</span>`;
-                document.getElementById('recipe-list').appendChild(item);
-                document.getElementById('recipe-title').value = '';
-                document.getElementById('recipe-ingredients').value = '';
-            }
-        }
-
-        // SECURE NOTES SYSTEM (Local Storage persistent memory)
         function saveNotes() {
-            const txt = document.getElementById('scratchpad').value;
-            localStorage.setItem('hypet_notes', txt);
-            const status = document.getElementById('save-status');
-            status.innerText = "Saving...";
-            setTimeout(() => { status.innerText = "Saved ✓"; }, 400);
+            localStorage.setItem('hypet_notes', document.getElementById('scratchpad').value);
+            document.getElementById('save-status').innerText = "Saving...";
+            setTimeout(() => { document.getElementById('save-status').innerText = "Saved ✓"; }, 300);
         }
-
         function loadNotes() {
-            const saved = localStorage.getItem('hypet_notes');
-            if (saved !== null) {
-                document.getElementById('scratchpad').value = saved;
-            } else {
-                document.getElementById('scratchpad').value = `// Clocked Development Vault\nProject: Hype't App Build v1.2`;
-            }
+            document.getElementById('scratchpad').value = localStorage.getItem('hypet_notes') || `// System Decrypted Successfully.\nWelcome back, CatgirlKaryl.`;
         }
 
-        // Submit passcode via Enter Key
-        document.getElementById('passcode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') unlockDashboard();
-        });
+        document.getElementById('lock-screen').addEventListener('keypress', function(e) { if (e.key === 'Enter') authenticateVault(); });
     </script>
 </body>
 </html>
