@@ -6,15 +6,14 @@
     <title>Hype't // Clocked Development</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #09070f 0%, #030305 100%);
+            --bg-gradient: linear-gradient(135deg, #07050a 0%, #020204 100%);
             --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.06);
-            --glass-hover: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-hover: rgba(255, 255, 255, 0.08);
             --text-primary: #f3f4f6;
             --text-secondary: #6b7280;
             --accent: #818cf8;
             --accent-hover: #4f46e5;
-            --discord-color: #5865F2;
             --danger: #ef4444;
             --success: #10b981;
         }
@@ -39,7 +38,7 @@
 
         .hidden { display: none !important; }
 
-        /* Auth Gate Area */
+        /* Auth Screen */
         #auth-screen {
             width: 100%;
             max-width: 400px;
@@ -120,33 +119,16 @@
         .btn-primary { background: var(--accent); color: white; }
         .btn-primary:hover { background: var(--accent-hover); }
 
-        .divider {
-            margin: 1.5rem 0;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: rgba(255,255,255,0.15);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--glass-border); }
-        .divider:not(:empty)::before { margin-right: .5em; }
-        .divider:not(:empty)::after { margin-left: .5em; }
-
-        .btn-discord { background: transparent; border: 1px solid var(--glass-border); color: #9ca3af; }
-        .btn-discord:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
-
-        /* Customization Overhaul: Modular Homepage Dropdown Index Layout */
+        /* Dashboard Interface */
         #dashboard-screen {
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             padding: 2.5rem 1.5rem;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 2.5rem;
+            gap: 2rem;
+            position: relative;
             animation: fadeIn 0.6s ease;
         }
 
@@ -154,10 +136,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
-        .meta-context h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
-        .meta-context p { font-size: 0.8rem; color: var(--text-secondary); }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        /* Hamburger Control Menu */
+        .menu-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 0.5rem;
+            z-index: 100;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .menu-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -7px); }
+
+        .meta-context h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+        .meta-context p { font-size: 0.75rem; color: var(--text-secondary); }
 
         .logout-btn {
             background: transparent;
@@ -171,50 +184,69 @@
         }
         .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-        /* Clean Dashboard Selector Row */
-        .navigation-control {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            background: rgba(0,0,0,0.2);
-            padding: 0.5rem;
-            border-radius: 16px;
+        /* Clean Pop-out Side Navigation */
+        .sidebar-nav {
+            position: absolute;
+            top: 4.5rem;
+            left: 1.5rem;
+            width: 260px;
+            background: rgba(10, 8, 16, 0.95);
             border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.75rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateX(-20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 99;
         }
 
-        .selector-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            padding-left: 0.75rem;
-            padding-top: 0.25rem;
+        .sidebar-nav.active {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .custom-dropdown-select {
+        .nav-btn {
             width: 100%;
             background: transparent;
             border: none;
-            color: #fff;
-            padding: 0.75rem;
-            font-size: 1rem;
+            color: #9ca3af;
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-size: 0.9rem;
             font-weight: 500;
-            outline: none;
+            border-radius: 10px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
         }
 
-        .custom-dropdown-select option {
-            background: #0d0c13;
+        .nav-btn:hover {
+            background: var(--glass-hover);
             color: #fff;
         }
 
-        /* Clean Workstation Panel Content */
+        .nav-btn.active {
+            background: rgba(129, 140, 248, 0.15);
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Workspace Core Window */
         .workspace-panel {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 2rem;
-            min-height: 320px;
+            min-height: 400px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .panel-heading {
@@ -222,10 +254,9 @@
             border-bottom: 1px solid var(--glass-border);
             padding-bottom: 1rem;
         }
-
         .panel-heading h3 { font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
 
-        /* Inner Content Logic Styles */
+        /* Universal Module Styling components */
         .metric-display {
             background: rgba(0, 0, 0, 0.3);
             padding: 1.25rem;
@@ -234,7 +265,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.01);
         }
         .metric-val { font-size: 1.6rem; font-weight: 700; color: var(--success); }
 
@@ -262,6 +293,74 @@
             border-left: 3px solid var(--accent);
         }
 
+        /* Mental Health Custom Extensions */
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .mood-btn {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 0.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+        .mood-btn span:last-child { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; }
+        .mood-btn:hover { background: var(--glass-hover); border-color: var(--accent); }
+        .mood-btn.selected { background: rgba(129, 140, 248, 0.1); border-color: var(--accent); }
+
+        .analytics-cluster {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .analytics-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .analytics-card h4 { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.5rem; letter-spacing: 0.05em;}
+        .analytics-card p { font-size: 1.4rem; font-weight: 700; color: #fff;}
+
+        /* Audio Matrix */
+        .sound-matrix {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .sound-node {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+        .sound-node button {
+            background: var(--glass-border);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .sound-node button:hover { background: var(--glass-hover); }
+        .sound-node button.playing { background: var(--success); }
+
+        /* Legacy Module elements */
         .recipe-book { display: flex; flex-direction: column; gap: 1.25rem; }
         .recipe-item { border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; }
         .recipe-item:last-child { border: none; }
@@ -288,10 +387,6 @@
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -302,7 +397,6 @@
             <h1>Hype't</h1>
             <p>Clocked Development</p>
         </div>
-        
         <form class="auth-form" id="login-form" onsubmit="handleSecureLogin(event)">
             <div class="input-group">
                 <input type="text" id="dev-user" placeholder="Identity Handle" required autocomplete="off">
@@ -313,47 +407,96 @@
             <button type="submit" class="btn btn-primary">Decrypt Workspace</button>
             <div class="error-message" id="auth-error"></div>
         </form>
-
-        <div class="divider">External Interface</div>
-
-        <button class="btn btn-discord" onclick="triggerDiscordOAuth()">
-            <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor" style="opacity:0.6;"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.73-10.93,68.6,68.6,0,0,1-10.64-5.12c.91-.67,1.81-1.37,2.65-2.1a75.22,75.22,0,0,0,72.76,0c.85.73,1.75,1.43,2.66,2.1a68.86,68.86,0,0,1-10.65,5.12,74.13,74.13,0,0,0,6.74,10.93,105.54,105.54,0,0,0,31.1-18.83C129.61,48.54,123.83,25.83,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
-            OAuth2 Entry Locked
-        </button>
     </div>
 
-    <!-- CLEAN HIGH-END DASHBOARD OVERHAUL -->
+    <!-- MAIN DASHBOARD -->
     <div id="dashboard-screen" class="hidden">
         <header class="dash-header">
-            <div class="meta-context">
-                <h2 id="welcome-user">Workspace Sandbox</h2>
-                <p id="auth-method">Clocked Development Root Ecosystem</p>
+            <div class="header-left">
+                <!-- Three-line layout toggle menu -->
+                <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebarMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="meta-context">
+                    <h2 id="welcome-user">Workspace Sandbox</h2>
+                    <p id="auth-method">Clocked Development Root Ecosystem</p>
+                </div>
             </div>
             <button class="logout-btn" onclick="terminateSession()">Lock Terminal</button>
         </header>
 
-        <!-- Dynamic Dropdown Component Navigation Structure -->
-        <nav class="navigation-control">
-            <span class="selector-label">Select Workspace Focus</span>
-            <select class="custom-dropdown-select" id="section-selector" onchange="switchSection(this.value)">
-                <option value="budget">💳 Budget Ledger Framework</option>
-                <option value="period">🧬 Biological Cycle Trendline</option>
-                <option value="recipes">🍳 Culinary Matrix Repositories</option>
-                <option value="diary">🛡️ Secure Isolation Notes & Logs</option>
-            </select>
+        <!-- Clean Pop-out Side Navigation Component Area -->
+        <nav class="sidebar-nav" id="sidebar-nav">
+            <button class="nav-btn active" onclick="navigateToSection('mood', this)">🧠 Mood & Reflection</button>
+            <button class="nav-btn" onclick="navigateToSection('ambiance', this)">🎵 Focus Ambiance</button>
+            <button class="nav-btn" onclick="navigateToSection('budget', this)">💳 Budget Ledger</button>
+            <button class="nav-btn" onclick="navigateToSection('period', this)">🧬 Biological Trendline</button>
+            <button class="nav-btn" onclick="navigateToSection('recipes', this)">🍳 Culinary Matrices</button>
+            <button class="nav-btn" onclick="navigateToSection('diary', this)">🛡️ Secure Isolation Notes</button>
         </nav>
 
-        <!-- Singular Main Panel Content Interface -->
+        <!-- Singular Main Workspace Component Panel -->
         <main class="workspace-panel">
             
-            <!-- SECTION 1: BUDGET TOOL -->
-            <div id="panel-budget" class="panel-section">
+            <!-- MENTAL HEALTH EXTENSION 1: MOOD METRICS TRACKER -->
+            <div id="panel-mood" class="panel-section">
+                <div class="panel-heading">
+                    <h3>🧠 Mood Analytics & Real-Time Tracking</h3>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Log state velocity regularly to index mental performance metrics.</p>
+                <div class="mood-grid">
+                    <button class="mood-btn" onclick="logMoodState('optimal')"><span>⚡</span><span>Optimal</span></button>
+                    <button class="mood-btn" onclick="logMoodState('stable')"><span>⚖️</span><span>Stable</span></button>
+                    <button class="mood-btn" onclick="logMoodState('fatigued')"><span>☁️</span><span>Fatigued</span></button>
+                    <button class="mood-btn" onclick="logMoodState('anxious')"><span>🌀</span><span>Anxious</span></button>
+                    <button class="mood-btn" onclick="logMoodState('critical')"><span>🚨</span><span>Critical</span></button>
+                </div>
+                <div class="analytics-cluster">
+                    <div class="analytics-card">
+                        <h4>Dominant Mental State</h4>
+                        <p id="mood-dominant-stat">No Data</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>Stability Distribution</h4>
+                        <p id="mood-ratio-stat">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENTAL HEALTH EXTENSION 2: AUDIO AMBIANCE SYNTHESIZER -->
+            <div id="panel-ambiance" class="panel-section hidden">
+                <div class="panel-heading">
+                    <h3>🎵 Cognitive Flow Ambiance Synthesizer</h3>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Client-side synthesized audio nodes engineered to block external audio distractions.</p>
+                <div class="sound-matrix">
+                    <div class="sound-node">
+                        <div>
+                            <h4 style="font-size:0.95rem;">Deep Focus Structural Noise</h4>
+                            <p style="font-size:0.75rem; color: var(--text-secondary);">Brownian frequency curve optimized for technical development.</p>
+                        </div>
+                        <button id="audio-btn-brown" onclick="toggleNoise('brown')">Initialize Node</button>
+                    </div>
+                    <div class="sound-node">
+                        <div>
+                            <h4 style="font-size:0.95rem;">Anxiety Dampening Wave</h4>
+                            <p style="font-size:0.75rem; color: var(--text-secondary);">Pink noise profile tailored to stabilize biological flight-or-fight spikes.</p>
+                        </div>
+                        <button id="audio-btn-pink" onclick="toggleNoise('pink')">Initialize Node</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUDGET MODULE -->
+            <div id="panel-budget" class="panel-section hidden">
                 <div class="panel-heading">
                     <h3>💳 Budget Tracker</h3>
                 </div>
                 <div class="metric-display">
                     <span>Remaining Dynamic Liquid Balance:</span>
-                    <span class="metric-val" id="budget-total">$0.00</span>
+                    <span class="metric-val" id="budget-total">$5000.00</span>
                 </div>
                 <form class="inline-form" onsubmit="addExpense(event)">
                     <input type="text" id="exp-desc" placeholder="Expense description identifier..." required>
@@ -363,7 +506,7 @@
                 <ul class="data-list" id="expense-list"></ul>
             </div>
 
-            <!-- SECTION 2: TREND ESTIMATION TOOL -->
+            <!-- TREND ESTIMATION MODULE -->
             <div id="panel-period" class="panel-section hidden">
                 <div class="panel-heading">
                     <h3>🧬 Period Tracker</h3>
@@ -379,7 +522,7 @@
                 </form>
             </div>
 
-            <!-- SECTION 3: CULINARY MATRIX -->
+            <!-- CULINARY MATRIX MODULE -->
             <div id="panel-recipes" class="panel-section hidden">
                 <div class="panel-heading">
                     <h3>🍳 Cooking Recipes</h3>
@@ -398,13 +541,13 @@
                 </div>
             </div>
 
-            <!-- SECTION 4: DIARY SECURE MEMORY -->
+            <!-- DIARY ISOLATION MODULE -->
             <div id="panel-diary" class="panel-section hidden">
                 <div class="panel-heading">
                     <h3>🛡️ Secure Logs & Reflections</h3>
                 </div>
-                <textarea class="diary-area" id="diary-input" placeholder="Initialize deep client sandboxed session writing... This memory block is fully self-contained inside native parameters."></textarea>
-                <button class="btn btn-primary" onclick="saveDiaryLog()" style="width: auto; padding: 0.75rem 2rem; margin-left: auto;">Save to Core Sandbox</button>
+                <textarea class="diary-area" id="diary-input" placeholder="Initialize deep client sandboxed session writing..."></textarea>
+                <button class="btn btn-primary" onclick="saveDiaryLog()" style="width: auto; padding: 0.75rem 2rem;">Save to Core Sandbox</button>
                 <div id="diary-status" style="font-size:0.8rem; text-align:right; margin-top:0.5rem; color:var(--success); min-height: 1rem;"></div>
             </div>
 
@@ -412,7 +555,6 @@
     </div>
 
     <script>
-        // STRICT SPECIFIED SYSTEM CREDENTIALS
         const AUTH_USER = "CatgirlKaryl";
         const AUTH_PASS = "clockeddevelopment";
 
@@ -420,24 +562,21 @@
         const KEY_EXPENSES = "hypet_expenses";
         const KEY_CYCLE = "hypet_cycle";
         const KEY_DIARY = "hypet_diary";
+        const KEY_MOODS = "hypet_moods";
 
         window.addEventListener('DOMContentLoaded', () => {
             const activeSession = localStorage.getItem(KEY_AUTH);
             if (activeSession) {
-                // Double check persistent tokens match the strict credentials
                 const token = JSON.parse(activeSession);
-                if (token.user === AUTH_USER) {
-                    initDashboard(token);
-                } else {
-                    terminateSession();
-                }
+                if (token.user === AUTH_USER) initDashboard(token);
+                else terminateSession();
             }
             loadExpenses();
             loadCycleData();
             loadDiaryData();
+            processMoodAnalytics();
         });
 
-        // ENFORCED LOGIN SECURITY PROTOCOL
         function handleSecureLogin(e) {
             e.preventDefault();
             const userIn = document.getElementById('dev-user').value;
@@ -455,12 +594,6 @@
             }
         }
 
-        // CONTROLLED EXPLICIT DISCORD BLOCK
-        function triggerDiscordOAuth() {
-            const errorEl = document.getElementById('auth-error');
-            errorEl.innerText = "Discord connection is not configured yet.";
-        }
-
         function initDashboard(session) {
             document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('dashboard-screen').classList.remove('hidden');
@@ -472,24 +605,123 @@
             window.location.reload();
         }
 
-        // HOMEPAGE STYLING CUSTOMIZATION: Dropdown Section Switcher Mechanics
-        function switchSection(targetSectionId) {
-            document.querySelectorAll('.panel-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            const targeted = document.getElementById(`panel-${targetSectionId}`);
-            if (targeted) {
-                targeted.classList.remove('hidden');
-            }
+        /* NAVIGATION INTERFACE MANAGEMENT */
+        function toggleSidebarMenu() {
+            const btn = document.getElementById('menu-toggle');
+            const nav = document.getElementById('sidebar-nav');
+            btn.classList.toggle('open');
+            nav.classList.toggle('active');
         }
 
-        // ENGINE SYSTEM 1: BUDGET CALCULATOR
+        function navigateToSection(sectionId, element) {
+            document.querySelectorAll('.panel-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(`panel-${sectionId}`).classList.remove('hidden');
+            element.classList.add('active');
+            toggleSidebarMenu();
+        }
+
+        /* MENTAL HEALTH: AUDIO GENERATOR ENGINES */
+        let audioCtx = null;
+        let activeNoiseNode = null;
+        let activeNoiseType = null;
+
+        function toggleNoise(type) {
+            const btn = document.getElementById(`audio-btn-${type}`);
+            
+            if (activeNoiseNode && activeNoiseType === type) {
+                activeNoiseNode.stop();
+                activeNoiseNode = null;
+                activeNoiseType = null;
+                btn.innerText = "Initialize Node";
+                btn.classList.remove('playing');
+                return;
+            }
+
+            if (activeNoiseNode) {
+                activeNoiseNode.stop();
+                document.querySelectorAll('.sound-node button').forEach(b => {
+                    b.innerText = "Initialize Node";
+                    b.classList.remove('playing');
+                });
+            }
+
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            
+            let lastOut = 0.0;
+            for (let i = 0; i < bufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                if (type === 'brown') {
+                    output[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = output[i];
+                    output[i] *= 3.5; 
+                } else if (type === 'pink') {
+                    output[i] = (lastOut + (0.12 * white)) / 1.12;
+                    lastOut = output[i];
+                    output[i] *= 2.5;
+                }
+            }
+
+            const noiseSource = audioCtx.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            noiseSource.loop = true;
+
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.15; // Safe default volume boundary
+
+            noiseSource.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            noiseSource.start();
+            activeNoiseNode = noiseSource;
+            activeNoiseType = type;
+            btn.innerText = "Terminate Node";
+            btn.classList.add('playing');
+        }
+
+        /* MENTAL HEALTH: MOOD STATE CONTROLLER */
+        function logMoodState(moodType) {
+            const history = JSON.parse(localStorage.getItem(KEY_MOODS)) || [];
+            history.push({ type: moodType, timestamp: Date.now() });
+            localStorage.setItem(KEY_MOODS, JSON.stringify(history));
+            
+            processMoodAnalytics();
+        }
+
+        function processMoodAnalytics() {
+            const history = JSON.parse(localStorage.getItem(KEY_MOODS)) || [];
+            if (history.length === 0) return;
+
+            const counts = {};
+            let optimalOrStableCount = 0;
+
+            history.forEach(log => {
+                counts[log.type] = (counts[log.type] || 0) + 1;
+                if (log.type === 'optimal' || log.type === 'stable') optimalOrStableCount++;
+            });
+
+            let dominant = 'None';
+            let max = 0;
+            for (const [type, count] of Object.entries(counts)) {
+                if (count > max) { max = count; dominant = type; }
+            }
+
+            document.getElementById('mood-dominant-stat').innerText = dominant.toUpperCase();
+            const rawRatio = (optimalOrStableCount / history.length) * 100;
+            document.getElementById('mood-ratio-stat').innerText = `${rawRatio.toFixed(0)}%`;
+        }
+
+        /* BUDGET CALCULATOR */
         function loadExpenses() {
             const data = JSON.parse(localStorage.getItem(KEY_EXPENSES)) || [];
             const container = document.getElementById('expense-list');
             container.innerHTML = '';
-            
-            let accumulatedTotal = 5000.00; 
+            let accumulatedTotal = 5000.00;
             
             data.forEach(item => {
                 accumulatedTotal -= item.amount;
@@ -498,42 +730,30 @@
                 li.innerHTML = `<span>${item.desc}</span> <span style="color:var(--danger); font-weight: 600;">-$${item.amount.toFixed(2)}</span>`;
                 container.appendChild(li);
             });
-
-            const totalEl = document.getElementById('budget-total');
-            totalEl.innerText = `$${accumulatedTotal.toFixed(2)}`;
-            totalEl.style.color = accumulatedTotal < 1000 ? 'var(--danger)' : 'var(--success)';
+            document.getElementById('budget-total').innerText = `$${accumulatedTotal.toFixed(2)}`;
         }
 
         function addExpense(e) {
             e.preventDefault();
-            const descInput = document.getElementById('exp-desc');
-            const amtInput = document.getElementById('exp-amt');
-            
+            const desc = document.getElementById('exp-desc');
+            const amt = document.getElementById('exp-amt');
             const data = JSON.parse(localStorage.getItem(KEY_EXPENSES)) || [];
-            data.push({
-                desc: descInput.value,
-                amount: parseFloat(amtInput.value)
-            });
-            
+            data.push({ desc: desc.value, amount: parseFloat(amt.value) });
             localStorage.setItem(KEY_EXPENSES, JSON.stringify(data));
-            descInput.value = '';
-            amtInput.value = '';
+            desc.value = ''; amt.value = '';
             loadExpenses();
         }
 
-        // ENGINE SYSTEM 2: CALENDAR CALCULATION
+        /* CYCLE DYNAMICS */
         function calculateCycle(e) {
             e.preventDefault();
             const startVal = document.getElementById('cycle-start').value;
             const durVal = parseInt(document.getElementById('cycle-duration').value);
-
             if(!startVal || isNaN(durVal)) return;
 
             const startDate = new Date(startVal);
             startDate.setDate(startDate.getDate() + durVal);
-            
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            const trendText = startDate.toLocaleDateString('en-US', options);
+            const trendText = startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
             localStorage.setItem(KEY_CYCLE, JSON.stringify({ rawDate: startVal, duration: durVal, formatted: trendText }));
             document.getElementById('cycle-prediction').innerText = trendText;
@@ -548,19 +768,16 @@
             }
         }
 
-        // ENGINE SYSTEM 4: LOG COMMITS
+        /* DIARY SANDBOX STORE */
         function saveDiaryLog() {
-            const text = document.getElementById('diary-input').value;
-            localStorage.setItem(KEY_DIARY, text);
-            
+            localStorage.setItem(KEY_DIARY, document.getElementById('diary-input').value);
             const status = document.getElementById('diary-status');
             status.innerText = "State persistent in sandbox storage";
             setTimeout(() => status.innerText = "", 3000);
         }
 
         function loadDiaryData() {
-            const text = localStorage.getItem(KEY_DIARY) || "";
-            document.getElementById('diary-input').value = text;
+            document.getElementById('diary-input').value = localStorage.getItem(KEY_DIARY) || "";
         }
     </script>
 </body>
