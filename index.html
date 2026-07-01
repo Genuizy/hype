@@ -93,7 +93,6 @@
             margin-bottom: 30px;
         }
 
-        /* Discord Button integration */
         .discord-btn {
             width: 100%;
             padding: 14px;
@@ -329,14 +328,10 @@
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent-color); }
 
-        .btn-small { padding: 10px 20px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 6px; cursor: pointer; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; transition: all 0.3s; }
+        .btn-small { padding: 10px 20px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 6px; cursor: pointer; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; transition: all 0.3s; margin-top: 5px; }
         .btn-small:hover { background: var(--accent-color); color: #000; }
 
-        .placeholder-ai { border: 1px dashed #222; padding: 15px; border-radius: 8px; text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.85rem; margin-top: 15px; }
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #141414; }
-        .strike { text-decoration: line-through; color: var(--text-muted); }
-        .badge-status { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
-
         footer { text-align: center; margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
         footer span { color: var(--accent-color); }
     </style>
@@ -461,6 +456,7 @@
                                     <ol class="steps-list">
                                         <li data-step="1.">Sauté onions and sliced mushrooms in olive oil.</li>
                                         <li data-step="2.">Add Arborio rice, stirring quickly for 2 minutes.</li>
+                                        <li data-step="3.">Slowly add warm broth one ladle at a time until absorbed.</li>
                                     </ol>
                                 </div>
                             </div>
@@ -490,29 +486,24 @@
 
     <script>
         // --- DISCORD CONFIGURATION ---
-        // To make this fully functional, replace standard placeholders with your data inside your Discord Developer Portal
         const CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID'; 
-        const REDIRECT_URI = window.location.href.split('#')[0]; // Sends user back to this identical file route
+        const REDIRECT_URI = window.location.href.split('#')[0];
 
         function loginWithDiscord() {
-            // If you haven't filled your Client ID, this acts as an automatic mock simulation
             if (CLIENT_ID === 'YOUR_DISCORD_CLIENT_ID') {
                 alert("Simulating Discord Portal Access API Grant...");
                 grantEntry("Discord Guest User");
                 return;
             }
-            
             const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
             window.location.href = url;
         }
 
-        // Checks for Discord token callback parameters upon load
         window.addEventListener('load', () => {
             const fragment = new URLSearchParams(window.location.hash.slice(1));
             const accessToken = fragment.get('access_token');
 
             if (accessToken) {
-                // Fetch basic account information from Discord
                 fetch('https://discord.com/api/users/@me', {
                     headers: { Authorization: `Bearer ${accessToken}` }
                 })
@@ -520,7 +511,6 @@
                 .then(data => {
                     if (data.username) {
                         grantEntry(data.username);
-                        // Clean up url hash structure
                         window.history.replaceState({}, document.title, window.location.pathname);
                     }
                 })
@@ -530,7 +520,6 @@
             }
         });
 
-        // Universal dashboard unlatch system
         function grantEntry(name) {
             const lockScreen = document.getElementById('lock-screen');
             const dashboard = document.getElementById('dashboard');
@@ -567,7 +556,7 @@
             }
         }
 
-        // --- PRE-EXISTING SYSTEMS ---
+        // --- PRE-EXISTING APP UTILITIES ---
         function toggleDropdown(element) { element.parentElement.classList.toggle('active'); }
         function toggleRecipeBody(hdr) {
             const bdy = hdr.nextElementSibling;
