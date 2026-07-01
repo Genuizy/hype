@@ -16,6 +16,7 @@
             --success-color: #00ff66;
             --glass-bg: rgba(10, 10, 10, 0.65);
             --glass-border: rgba(255, 255, 255, 0.03);
+            --discord-color: #5865F2;
         }
 
         * {
@@ -67,16 +68,6 @@
             position: relative;
         }
 
-        /* Ambient subtle gold glow behind card */
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            top: -10%; left: -10%; right: -10%; bottom: -10%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
         .brand-logo h1 {
             font-size: 3rem;
             font-weight: 900;
@@ -99,40 +90,60 @@
             color: var(--text-muted);
             letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 40px;
-        }
-
-        /* Tab Switcher */
-        .auth-tabs {
-            display: flex;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 4px;
-            border-radius: 12px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.02);
         }
 
-        .auth-tab {
-            flex: 1;
-            padding: 10px;
-            background: transparent;
+        /* Discord Button integration */
+        .discord-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--discord-color);
+            color: #fff;
             border: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+            border-radius: 12px;
             font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s, transform 0.2s;
+            margin-bottom: 25px;
         }
 
-        .auth-tab.active {
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--accent-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        .discord-btn:hover {
+            background-color: #4752c4;
+            transform: translateY(-1px);
         }
 
-        /* Form Group Inputs */
+        .discord-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #161616;
+        }
+
+        .divider:not(:empty)::before { margin-right: .75em; }
+        .divider:not(:empty)::after { margin-left: .75em; }
+
         .form-group {
             text-align: left;
             margin-bottom: 20px;
@@ -181,7 +192,7 @@
             cursor: pointer;
             box-shadow: 0 5px 25px rgba(255, 215, 0, 0.15);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .submit-btn:hover {
@@ -229,15 +240,8 @@
             text-transform: uppercase;
         }
 
-        header h2 span {
-            color: var(--accent-color);
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
+        header h2 span { color: var(--accent-color); }
+        header p { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; }
 
         /* --- DROPDOWNS --- */
         .dropdown-container {
@@ -249,9 +253,7 @@
             transition: border-color 0.3s;
         }
 
-        .dropdown-container:hover {
-            border-color: #252525;
-        }
+        .dropdown-container:hover { border-color: #252525; }
 
         .dropdown-header {
             padding: 20px 25px;
@@ -271,10 +273,7 @@
             gap: 15px;
         }
 
-        .dropdown-header h3 span.icon {
-            color: var(--accent-color);
-            font-size: 1.3rem;
-        }
+        .dropdown-header h3 span.icon { color: var(--accent-color); font-size: 1.3rem; }
 
         .arrow {
             border: solid var(--text-muted);
@@ -285,10 +284,7 @@
             transition: transform 0.3s;
         }
 
-        .dropdown-container.active .arrow {
-            transform: rotate(-135deg);
-            border-color: var(--accent-color);
-        }
+        .dropdown-container.active .arrow { transform: rotate(-135deg); border-color: var(--accent-color); }
 
         .dropdown-content {
             max-height: 0;
@@ -304,182 +300,44 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* --- RECIPES CARD LOOK --- */
-        .recipe-vault-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .recipe-item-card {
-            background: #0c0c0c;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
+        /* --- RECIPES --- */
+        .recipe-vault-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
+        .recipe-item-card { background: #0c0c0c; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; }
         .recipe-item-card:hover { border-color: #333; }
-
-        .recipe-card-header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            background: rgba(255,255,255,0.01);
-        }
-
-        .recipe-card-header h4 {
-            font-size: 1.1rem;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .recipe-badge {
-            font-size: 0.75rem;
-            color: var(--accent-color);
-            border: 1px solid rgba(255,215,0,0.3);
-            padding: 2px 8px;
-            border-radius: 20px;
-        }
-
-        .recipe-card-body {
-            display: none;
-            padding: 20px;
-            background: #040404;
-            border-top: 1px solid var(--border-color);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .recipe-sections {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .recipe-sections { grid-template-columns: 1fr; }
-        }
-
-        .recipe-meta-title {
-            font-size: 0.8rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 4px;
-        }
-
+        .recipe-card-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: rgba(255,255,255,0.01); }
+        .recipe-card-header h4 { font-size: 1.1rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .recipe-badge { font-size: 0.75rem; color: var(--accent-color); border: 1px solid rgba(255,215,0,0.3); padding: 2px 8px; border-radius: 20px; }
+        .recipe-card-body { display: none; padding: 20px; background: #040404; border-top: 1px solid var(--border-color); animation: fadeIn 0.3s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .recipe-sections { display: grid; grid-template-columns: 1fr 1.5fr; gap: 25px; }
+        @media (max-width: 768px) { .recipe-sections { grid-template-columns: 1fr; } }
+        
+        .recipe-meta-title { font-size: 0.8rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-bottom: 1px solid #1a1a1a; padding-bottom: 4px; }
         .ingredients-list, .steps-list { list-style: none; }
-        .ingredients-list li {
-            padding: 6px 0;
-            font-size: 0.9rem;
-            color: #ccc;
-            border-bottom: 1px dashed #161616;
-        }
-        .steps-list li {
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            color: #ddd;
-            line-height: 1.5;
-            position: relative;
-            padding-left: 25px;
-        }
-        .steps-list li::before {
-            content: attr(data-step);
-            position: absolute;
-            left: 0; top: 1px;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
+        .ingredients-list li { padding: 6px 0; font-size: 0.9rem; color: #ccc; border-bottom: 1px dashed #161616; }
+        .steps-list li { margin-bottom: 12px; font-size: 0.9rem; color: #ddd; line-height: 1.5; position: relative; padding-left: 25px; }
+        .steps-list li::before { content: attr(data-step); position: absolute; left: 0; top: 1px; font-weight: bold; color: var(--accent-color); }
 
-        /* --- GLOBAL INTERNAL STYLES --- */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; }
-        }
+        /* --- GLOBAL INNER STYLES --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
         input[type="text"], input[type="number"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 12px;
-            background: #0b0b0b;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: white;
-            margin-bottom: 15px;
+            width: 100%; padding: 12px; background: #0b0b0b; border: 1px solid var(--border-color); border-radius: 6px; color: white; margin-bottom: 15px;
         }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent-color); }
 
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
+        .btn-small { padding: 10px 20px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 6px; cursor: pointer; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; transition: all 0.3s; }
+        .btn-small:hover { background: var(--accent-color); color: #000; }
 
-        .btn-small {
-            padding: 10px 20px;
-            background: transparent;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-        }
-
-        .btn-small:hover {
-            background: var(--accent-color);
-            color: #000;
-        }
-
-        .placeholder-ai {
-            border: 1px dashed #222;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 0.85rem;
-            margin-top: 15px;
-        }
-
-        .list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #141414;
-        }
-
+        .placeholder-ai { border: 1px dashed #222; padding: 15px; border-radius: 8px; text-align: center; color: var(--text-muted); font-style: italic; font-size: 0.85rem; margin-top: 15px; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #141414; }
         .strike { text-decoration: line-through; color: var(--text-muted); }
         .badge-status { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
 
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px 0;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
+        footer { text-align: center; margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
         footer span { color: var(--accent-color); }
     </style>
 </head>
@@ -493,11 +351,15 @@
             </div>
             <div class="brand-subtitle">Clocked Development Vault</div>
 
-            <!-- Authentic Mode Toggles -->
-            <div class="auth-tabs">
-                <button id="tab-login" class="auth-tab active" onclick="switchAuthMode('login')">Sign In</button>
-                <button id="tab-register" class="auth-tab" onclick="switchAuthMode('register')">Create Account</button>
-            </div>
+            <!-- Discord OAuth Button -->
+            <button class="discord-btn" onclick="loginWithDiscord()">
+                <svg viewBox="0 0 127.14 96.36">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.83-11.11,68.43,68.43,0,0,1-10.75-5.13c.91-.66,1.8-1.34,2.65-2a75.58,75.58,0,0,0,72.76,0c.85.69,1.74,1.37,2.65,2a68.44,68.44,0,0,1-10.75,5.13,74.12,74.12,0,0,0,6.83,11.11,105.54,105.54,0,0,0,31.06-18.83C130,50.22,124.29,27.35,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.88,46,53.88,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
+                </svg>
+                Sign in with Discord
+            </button>
+
+            <div class="divider">Or Secure Account</div>
             
             <div class="form-group">
                 <label>Vault Username</label>
@@ -509,7 +371,7 @@
                 <input type="password" id="vault-pass" class="input-field" placeholder="••••••••••••">
             </div>
 
-            <button id="auth-action-btn" class="submit-btn" onclick="authenticateVault()">Authorize Session</button>
+            <button class="submit-btn" onclick="authenticateVault()">Authorize Session</button>
             <div id="error-banner" class="error-banner">Invalid Identity Specifications.</div>
         </div>
     </div>
@@ -518,7 +380,7 @@
     <div id="dashboard">
         <header>
             <h2>Hype<span>'t</span></h2>
-            <p>Everything you need in life. Optimized.</p>
+            <p id="welcome-msg">Everything you need in life. Optimized.</p>
         </header>
 
         <!-- MODULE 1: BUDGET TRACKER -->
@@ -546,7 +408,6 @@
                     <label>Recent Expenses</label>
                     <div id="expense-list"></div>
                 </div>
-                <div class="placeholder-ai">AI Integration pending: Smart budget allocation suggestions.</div>
             </div>
         </div>
 
@@ -567,88 +428,12 @@
                     <div>
                         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px;">Predicted Next Cycle Start:</p>
                         <h4 id="next-period-prediction" style="color: var(--accent-color); font-size: 1.5rem; margin-bottom: 15px;">Calculating...</h4>
-                        <label>Log Symptoms</label>
-                        <input type="text" placeholder="Cramps, energetic, tired...">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- MODULE 3: MENTAL HEALTH -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">🧠</span> Mental Health</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <label>How is your headspace today? (<span id="mood-val" style="color: var(--accent-color)">5</span>/10)</label>
-                <input type="range" id="mood-slider" min="1" max="10" value="5" oninput="document.getElementById('mood-val').innerText = this.value" style="width:100%; accent-color: var(--accent-color); margin-bottom: 20px;">
-                <label>Daily Reflection / Gratitude</label>
-                <textarea rows="3" placeholder="Write down 3 things you are grateful for today..."></textarea>
-                <button class="btn-small" onclick="alert('Mindset successfully logged to core vault!')">Log Mindset</button>
-                <div class="placeholder-ai">AI Integration pending: Sentiment analysis & cognitive behavioral writing prompts.</div>
-            </div>
-        </div>
-
-        <!-- MODULE 4: SHOWER SCHEDULES -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">🧼</span> Shower & Hygiene Schedule</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <div id="shower-list">
-                    <div class="list-item"><span>Morning Refresh (Hair & Body Care)</span><span style="color: var(--accent-color);">Mon, Wed, Fri at 07:00</span></div>
-                    <div class="list-item"><span>Quick Rinse & Skin Routine</span><span style="color: var(--text-muted);">Daily at 21:30</span></div>
-                </div>
-                <div class="grid-2" style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                    <div><input type="text" id="shower-title" placeholder="Routine type..."></div>
-                    <div><input type="text" id="shower-time" placeholder="Days/Time (e.g. Sat at 10:00)"></div>
-                </div>
-                <button class="btn-small" onclick="addShowerSchedule()">Add Routine</button>
-            </div>
-        </div>
-
-        <!-- MODULE 5: LIFE GOALS -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">🚀</span> Life Goals</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <div id="goals-list">
-                    <div class="list-item"><span>Master Tailwind CSS & Advanced JS</span><span class="badge-status" style="color:#00ff66; border:1px solid #00ff66;">In Progress</span></div>
-                    <div class="list-item"><span>Launch 'Clocked Development' SaaS app</span><span class="badge-status" style="color:var(--accent-color); border:1px solid var(--accent-color);">Planning</span></div>
-                </div>
-                <div class="grid-2" style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                    <input type="text" id="goal-title" placeholder="New Life Objective...">
-                    <select id="goal-status">
-                        <option value="In Progress">In Progress</option>
-                        <option value="Planning">Planning</option>
-                        <option value="Vision">Vision</option>
-                    </select>
-                </div>
-                <button class="btn-small" onclick="addLifeGoal()">Add Target Goal</button>
-            </div>
-        </div>
-
-        <!-- MODULE 6: BUCKET LIST -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">✨</span> Ultimate Bucket List</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <div id="bucket-list">
-                    <div class="list-item"><span id="b1">🌌 See the Northern Lights in Iceland</span><input type="checkbox" onchange="toggleBucket('b1', this)"></div>
-                    <div class="list-item"><span id="b2">🛩️ Skydive over the Swiss Alps</span><input type="checkbox" onchange="toggleBucket('b2', this)"></div>
-                </div>
-                <input type="text" id="bucket-input" placeholder="Add a new dream adventure..." style="margin-top: 15px;">
-                <button class="btn-small" onclick="addBucketItem()">Add Dream</button>
-            </div>
-        </div>
-
-        <!-- MODULE 7: COOKING RECIPES -->
+        <!-- MODULE 3: COOKING RECIPES -->
         <div class="dropdown-container">
             <div class="dropdown-header" onclick="toggleDropdown(this)">
                 <h3><span class="icon">🍳</span> Cooking Recipes</h3>
@@ -669,7 +454,6 @@
                                         <li>1.5 cups Arborio Rice</li>
                                         <li>4 cups Warm Vegetable Broth</li>
                                         <li>200g Mixed Wild Mushrooms</li>
-                                        <li>2 tbsp Truffle Oil</li>
                                     </ul>
                                 </div>
                                 <div>
@@ -677,34 +461,23 @@
                                     <ol class="steps-list">
                                         <li data-step="1.">Sauté onions and sliced mushrooms in olive oil.</li>
                                         <li data-step="2.">Add Arborio rice, stirring quickly for 2 minutes.</li>
-                                        <li data-step="3.">Slowly add broth until completely absorbed. Fold in truffle oil.</li>
                                     </ol>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-top: 25px;">
-                    <label>Recipe Title</label>
-                    <input type="text" id="recipe-title" placeholder="e.g. Garlic Ribeye Steak">
-                    <label>Ingredients (Comma Separated)</label>
-                    <textarea rows="2" id="recipe-ingredients" placeholder="Steak, Garlic, Butter..."></textarea>
-                    <label>Instructions (One per line)</label>
-                    <textarea rows="3" id="recipe-instructions" placeholder="Sear steak in pan.&#10;Baste with melted garlic butter."></textarea>
-                    <button class="btn-small" onclick="addRecipe()">Store Recipe</button>
-                </div>
             </div>
         </div>
 
-        <!-- MODULE 8: SECURE NOTES -->
+        <!-- MODULE 4: SECURE NOTES -->
         <div class="dropdown-container">
             <div class="dropdown-header" onclick="toggleDropdown(this)">
                 <h3><span class="icon">📝</span> Secure Notes</h3>
                 <div class="arrow"></div>
             </div>
             <div class="dropdown-content">
-                <label>Scratchpad (Persistent browser memory storage)</label>
+                <label>Scratchpad (Persistent browser storage)</label>
                 <textarea rows="6" id="scratchpad" oninput="saveNotes()"></textarea>
                 <div style="color: var(--success-color); font-size: 0.8rem;" id="save-status">Saved ✓</div>
             </div>
@@ -716,99 +489,92 @@
     </div>
 
     <script>
-        let authMode = 'login';
+        // --- DISCORD CONFIGURATION ---
+        // To make this fully functional, replace standard placeholders with your data inside your Discord Developer Portal
+        const CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID'; 
+        const REDIRECT_URI = window.location.href.split('#')[0]; // Sends user back to this identical file route
 
-        function switchAuthMode(mode) {
-            authMode = mode;
-            document.getElementById('tab-login').classList.toggle('active', mode === 'login');
-            document.getElementById('tab-register').classList.toggle('active', mode === 'register');
-            document.getElementById('auth-action-btn').innerText = mode === 'login' ? 'Authorize Session' : 'Register Secure ID';
-            document.getElementById('error-banner').style.display = 'none';
+        function loginWithDiscord() {
+            // If you haven't filled your Client ID, this acts as an automatic mock simulation
+            if (CLIENT_ID === 'YOUR_DISCORD_CLIENT_ID') {
+                alert("Simulating Discord Portal Access API Grant...");
+                grantEntry("Discord Guest User");
+                return;
+            }
+            
+            const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+            window.location.href = url;
+        }
+
+        // Checks for Discord token callback parameters upon load
+        window.addEventListener('load', () => {
+            const fragment = new URLSearchParams(window.location.hash.slice(1));
+            const accessToken = fragment.get('access_token');
+
+            if (accessToken) {
+                // Fetch basic account information from Discord
+                fetch('https://discord.com/api/users/@me', {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.username) {
+                        grantEntry(data.username);
+                        // Clean up url hash structure
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    }
+                })
+                .catch(() => {
+                    alert("Discord profile check handshake failed.");
+                });
+            }
+        });
+
+        // Universal dashboard unlatch system
+        function grantEntry(name) {
+            const lockScreen = document.getElementById('lock-screen');
+            const dashboard = document.getElementById('dashboard');
+            
+            lockScreen.style.opacity = '0';
+            lockScreen.style.transform = 'scale(1.03)';
+            
+            setTimeout(() => {
+                lockScreen.style.display = 'none';
+                document.body.style.alignItems = 'flex-start';
+                dashboard.style.display = 'block';
+                setTimeout(() => {
+                    dashboard.style.opacity = '1';
+                    document.getElementById('welcome-msg').innerText = `Welcome authenticated operator, ${name}. Core online.`;
+                    calculateBudget();
+                    calculatePeriod();
+                    loadNotes();
+                }, 50);
+            }, 600);
         }
 
         function authenticateVault() {
             const user = document.getElementById('vault-user').value.trim();
             const pass = document.getElementById('vault-pass').value;
-            const errorBanner = document.getElementById('error-banner');
-
-            if (authMode === 'register') {
-                errorBanner.innerText = "Registration Core is Closed. Use Approved Developer Identity.";
-                showError();
-                return;
-            }
 
             if (user === 'CatgirlKaryl' && pass === 'clockeddevelopment') {
-                const lockScreen = document.getElementById('lock-screen');
-                const dashboard = document.getElementById('dashboard');
-                
-                lockScreen.style.opacity = '0';
-                lockScreen.style.transform = 'scale(1.03)';
-                
-                setTimeout(() => {
-                    lockScreen.style.display = 'none';
-                    document.body.style.alignItems = 'flex-start';
-                    dashboard.style.display = 'block';
-                    setTimeout(() => {
-                        dashboard.style.opacity = '1';
-                        calculateBudget();
-                        calculatePeriod();
-                        loadNotes();
-                    }, 50);
-                }, 600);
+                grantEntry(user);
             } else {
-                errorBanner.innerText = "Access Denied. Invalid Identity Specifications.";
-                showError();
+                const banner = document.getElementById('error-banner');
+                banner.style.display = 'block';
+                banner.style.animation = 'none';
+                setTimeout(() => { banner.style.animation = ''; }, 10);
+                document.getElementById('vault-pass').value = '';
             }
         }
 
-        function showError() {
-            const banner = document.getElementById('error-banner');
-            banner.style.display = 'block';
-            banner.style.animation = 'none';
-            setTimeout(() => { banner.style.animation = ''; }, 10);
-            document.getElementById('vault-pass').value = '';
-        }
-
-        function toggleDropdown(element) {
-            element.parentElement.classList.toggle('active');
-        }
-
+        // --- PRE-EXISTING SYSTEMS ---
+        function toggleDropdown(element) { element.parentElement.classList.toggle('active'); }
         function toggleRecipeBody(hdr) {
             const bdy = hdr.nextElementSibling;
             bdy.style.display = bdy.style.display === "block" ? "none" : "block";
             hdr.querySelector('.recipe-badge').innerText = bdy.style.display === "block" ? "Close" : "Open Recipe";
         }
 
-        function addRecipe() {
-            const title = document.getElementById('recipe-title').value.trim();
-            const ingIn = document.getElementById('recipe-ingredients').value.trim();
-            const insIn = document.getElementById('recipe-instructions').value.trim();
-            if(!title || !ingIn || !insIn) return;
-
-            let ingH = '', insH = '';
-            ingIn.split(',').forEach(i => { if(i.trim()) ingH += `<li>${i.trim()}</li>`; });
-            insIn.split('\n').forEach((s, idx) => { if(s.trim()) insH += `<li data-step="${idx+1}.">${s.trim()}</li>`; });
-
-            const item = document.createElement('div');
-            item.className = 'recipe-item-card';
-            item.innerHTML = `
-                <div class="recipe-card-header" onclick="toggleRecipeBody(this)">
-                    <h4><span>🍳</span> ${title}</h4>
-                    <span class="recipe-badge">Open Recipe</span>
-                </div>
-                <div class="recipe-card-body">
-                    <div class="recipe-sections">
-                        <div><div class="recipe-meta-title">Ingredients</div><ul class="ingredients-list">${ingH}</ul></div>
-                        <div><div class="recipe-meta-title">Preparation Steps</div><ol class="steps-list">${insH}</ol></div>
-                    </div>
-                </div>`;
-            document.getElementById('recipe-vault').appendChild(item);
-            document.getElementById('recipe-title').value = '';
-            document.getElementById('recipe-ingredients').value = '';
-            document.getElementById('recipe-instructions').value = '';
-        }
-
-        // BUDGET SYSTEM
         let totalExpenses = 0;
         function calculateBudget() {
             const inc = parseFloat(document.getElementById('budget-income').value) || 0;
@@ -821,56 +587,21 @@
             const amt = parseFloat(document.getElementById('expense-amount').value);
             if(name && amt) {
                 totalExpenses += amt;
-                const el = document.createElement('div');
-                el.className = 'list-item';
+                const el = document.createElement('div'); el.className = 'list-item';
                 el.innerHTML = `<span>${name}</span><span style="color:#ff3333;">-$${amt}</span>`;
                 document.getElementById('expense-list').appendChild(el);
                 calculateBudget();
-                document.getElementById('expense-name').value = '';
-                document.getElementById('expense-amount').value = '';
+                document.getElementById('expense-name').value = ''; document.getElementById('expense-amount').value = '';
             }
         }
 
-        // PERIOD PREDICTOR
         function calculatePeriod() {
             const dt = document.getElementById('period-date').value;
             const cyc = parseInt(document.getElementById('period-cycle').value) || 28;
             if (dt) {
-                const next = new Date(dt);
-                next.setDate(next.getDate() + cyc);
+                const next = new Date(dt); next.setDate(next.getDate() + cyc);
                 document.getElementById('next-period-prediction').innerText = next.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
             }
-        }
-
-        function addShowerSchedule() {
-            const t = document.getElementById('shower-title').value;
-            const tm = document.getElementById('shower-time').value;
-            if(t && tm) {
-                const el = document.createElement('div'); el.className = 'list-item';
-                el.innerHTML = `<span>${t}</span><span style="color:var(--accent-color);">${tm}</span>`;
-                document.getElementById('shower-list').appendChild(el);
-                document.getElementById('shower-title').value = ''; document.getElementById('shower-time').value = '';
-            }
-        }
-
-        function addLifeGoal() {
-            const t = document.getElementById('goal-title').value;
-            const s = document.getElementById('goal-status').value;
-            if(!t) return;
-            const el = document.createElement('div'); el.className = 'list-item';
-            el.innerHTML = `<span>${t}</span><span class="badge-status" style="color:var(--accent-color); border:1px solid var(--accent-color);">${s}</span>`;
-            document.getElementById('goals-list').appendChild(el);
-            document.getElementById('goal-title').value = '';
-        }
-
-        function toggleBucket(id, cb) { document.getElementById(id).className = cb.checked ? 'strike' : ''; }
-        function addBucketItem() {
-            const val = document.getElementById('bucket-input').value; if(!val) return;
-            const id = 'b' + Math.random().toString(36).substr(2, 5);
-            const el = document.createElement('div'); el.className = 'list-item';
-            el.innerHTML = `<span id="${id}">${val}</span><input type="checkbox" onchange="toggleBucket('${id}', this)">`;
-            document.getElementById('bucket-list').appendChild(el);
-            document.getElementById('bucket-input').value = '';
         }
 
         function saveNotes() {
@@ -879,7 +610,7 @@
             setTimeout(() => { document.getElementById('save-status').innerText = "Saved ✓"; }, 300);
         }
         function loadNotes() {
-            document.getElementById('scratchpad').value = localStorage.getItem('hypet_notes') || `// System Decrypted Successfully.\nWelcome back, CatgirlKaryl.`;
+            document.getElementById('scratchpad').value = localStorage.getItem('hypet_notes') || `// System Decrypted Successfully.\nCore ready.`;
         }
 
         document.getElementById('lock-screen').addEventListener('keypress', function(e) { if (e.key === 'Enter') authenticateVault(); });
