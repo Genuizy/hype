@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hype't // Workspace</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-page">
+
+    <header class="master-header">
+        <div class="logo">Hype't</div>
+        
+        <div class="dropdown-container">
+            <button id="masterMenuBtn" class="btn btn-menu">Navigate Workspace ▾</button>
+            <div id="masterDropdown" class="dropdown-menu hidden">
+                <button class="nav-view-btn" data-target="journal-view">🧠 Encrypted Journal</button>
+                <button class="nav-view-btn" data-target="budget-view">📊 Financial Ledger</button>
+                <button class="nav-view-btn" data-target="wellness-view">🌱 Wellness & Cycles</button>
+                <button class="nav-view-btn" data-target="settings-view">⚙️ Accessibility & Customization</button>
+                <hr>
+                <button id="logoutBtn" class="btn-logout">Lock Workspace</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="workspace-canvas">
+
+        <section id="journal-view" class="workspace-view active-view">
+            <div class="trello-board">
+                <div class="trello-column">
+                    <h3>Secure Crypt-Journal</h3>
+                    <div class="crypto-key-zone" id="cryptoKeyZone">
+                        <p class="hint">Enter a custom passphrase to temporarily decrypt your logs. This is never stored anywhere.</p>
+                        <input type="password" id="journalPassphrase" placeholder="Session Encryption Passphrase">
+                        <button id="unlockJournalBtn" class="btn btn-small">Initialize Decryption</button>
+                    </div>
+                    
+                    <div id="journalAppContent" class="hidden">
+                        <div class="journal-editor">
+                            <textarea id="journalInput" placeholder="Write a raw, un-tracked reflection..."></textarea>
+                            <button id="saveJournalBtn" class="btn btn-primary">Encrypt & Log Entry</button>
+                        </div>
+                        <div id="journalEntries" class="entry-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journal-view" id="budget-view" class="workspace-view hidden">
+            <div class="trello-board">
+                <div class="trello-column">
+                    <h3>Ledger Inflow / Outflow</h3>
+                    <div class="balance-display">Available Balance: <span id="freeBalance">$0.00</span></div>
+                    <form id="budgetForm">
+                        <input type="text" id="budgetDesc" placeholder="Item/Income Label" required>
+                        <input type="number" id="budgetAmount" placeholder="Amount (negative for expense)" required>
+                        <button type="submit" class="btn btn-small">Log Transaction</button>
+                    </form>
+                    <ul id="budgetList" class="data-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="wellness-view" class="workspace-view hidden">
+            <div class="trello-board">
+                <div class="trello-column">
+                    <h3>Biological Trend Calculator</h3>
+                    <label>Last Cycle Start Date:</label>
+                    <input type="date" id="cycleDate">
+                    <label>Average Cycle Length (Days):</label>
+                    <input type="number" id="cycleLength" value="28">
+                    <button id="calcCycleBtn" class="btn btn-small">Project Trends</button>
+                    <div id="cycleResults" class="metrics-output"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="settings-view" class="workspace-view hidden">
+            <div class="trello-board">
+                <div class="trello-column">
+                    <h3>Visual Framework Customization</h3>
+                    <div class="setting-row">
+                        <label>Font Scale Accessibility</label>
+                        <select id="fontScaleSelect">
+                            <option value="standard">Standard Minimalist</option>
+                            <option value="accessible">Large / High Readability</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <label>Workspace Theme Matrix</label>
+                        <select id="themeSelect">
+                            <option value="glass-dark">Premium Glassmorphic Dark</option>
+                            <option value="high-contrast">High Contrast Accessibility</option>
+                            <option value="nordic-light">Nordic Clean Light</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/crypto.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
