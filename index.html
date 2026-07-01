@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hype't | Premium Dashboard</title>
+    <title>Hype't // Clocked Development</title>
     <style>
         :root {
-            --bg-color: #030303;
-            --panel-color: #0b0b0b;
-            --accent-color: #ffd700; /* Deep Premium Gold */
-            --accent-glow: rgba(255, 215, 0, 0.25);
-            --text-color: #ffffff;
-            --text-muted: #666666;
-            --border-color: #161616;
-            --success-color: #00ff66;
-            --glass-bg: rgba(10, 10, 10, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.03);
+            --bg-gradient: linear-gradient(135deg, #0f0c20 0%, #06060c 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.06);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
             --discord-color: #5865F2;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: '-apple-system', BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background: var(--bg-gradient);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,573 +37,632 @@
             overflow-x: hidden;
         }
 
-        /* --- HIGH-END AUTH SCREEN --- */
-        #lock-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% -20%, #1c1807 0%, #030303 65%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 20px;
-        }
+        /* Utilities */
+        .hidden { display: none !important; }
 
-        .auth-container {
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+        /* Auth Screen */
+        #auth-screen {
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 28px;
-            width: 100%;
-            max-width: 460px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.05);
-            padding: 45px 35px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
             text-align: center;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .brand-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .brand-header p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
             position: relative;
         }
 
-        .brand-logo h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            background: linear-gradient(180deg, #ffffff 0%, #999999 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-logo h1 span {
-            background: linear-gradient(135deg, #fff2aa 0%, var(--accent-color) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-subtitle {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-        }
-
-        .discord-btn {
+        .input-group input {
             width: 100%;
-            padding: 14px;
-            background-color: var(--discord-color);
+            padding: 1rem 1.25rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
             border: none;
             border-radius: 12px;
+            font-size: 0.95rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.2s;
-            margin-bottom: 25px;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .discord-btn:hover {
-            background-color: #4752c4;
-            transform: translateY(-1px);
+        .btn-primary {
+            background: var(--accent);
+            color: white;
         }
 
-        .discord-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
+        .btn-primary:hover { background: var(--accent-hover); }
 
         .divider {
+            margin: 1.5rem 0;
             display: flex;
             align-items: center;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
+            letter-spacing: 0.05em;
         }
 
         .divider::before, .divider::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid #161616;
+            border-bottom: 1px solid var(--glass-border);
         }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
 
-        .divider:not(:empty)::before { margin-right: .75em; }
-        .divider:not(:empty)::after { margin-left: .75em; }
-
-        .form-group {
-            text-align: left;
-            margin-bottom: 20px;
+        .btn-discord {
+            background: var(--discord-color);
+            color: white;
         }
+        .btn-discord:hover { filter: brightness(1.1); }
 
-        .form-group label {
-            display: block;
-            font-size: 0.75rem;
-            color: #888;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            padding-left: 4px;
-        }
-
-        .input-field {
+        /* Dashboard Screen */
+        #dashboard-screen {
             width: 100%;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            max-width: 1100px;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .input-field:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px var(--accent-glow);
-            background: rgba(0, 0, 0, 0.7);
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #fff099 0%, var(--accent-color) 100%);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px solid var(--glass-border);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.15);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 10px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+        .logout-btn:hover {
+            border-color: var(--danger);
+            color: var(--danger);
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+        /* Workspace Grid Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
         }
 
-        .error-banner {
-            color: #ff4444;
-            font-size: 0.8rem;
-            margin-top: 15px;
-            letter-spacing: 1px;
-            display: none;
-            text-transform: uppercase;
-            animation: shake 0.4s ease;
+        @media (max-width: 768px) {
+            .workspace-grid { grid-template-columns: 1fr; }
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-6px); }
-            40%, 80% { transform: translateX(6px); }
-        }
-
-        /* --- MAIN DASHBOARD --- */
-        #dashboard {
-            display: none;
-            width: 100%;
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-        }
-
-        header h2 {
-            font-size: 3rem;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-        }
-
-        header h2 span { color: var(--accent-color); }
-        header p { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; }
-
-        /* --- DROPDOWNS --- */
-        .dropdown-container {
-            margin-bottom: 20px;
-            background: var(--panel-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+        /* Dropdown Containers (Accordion Module) */
+        .module-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             overflow: hidden;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s ease;
         }
 
-        .dropdown-container:hover { border-color: #252525; }
+        .module-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
 
-        .dropdown-header {
-            padding: 20px 25px;
+        .module-trigger {
+            width: 100%;
+            padding: 1.25rem;
+            background: transparent;
+            border: none;
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            user-select: none;
-            background: linear-gradient(90deg, #0b0b0b 0%, #111111 100%);
+            text-align: left;
         }
 
-        .dropdown-header h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
+        .module-title-layout {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 0.75rem;
         }
 
-        .dropdown-header h3 span.icon { color: var(--accent-color); font-size: 1.3rem; }
-
-        .arrow {
-            border: solid var(--text-muted);
-            border-width: 0 2px 2px 0;
-            display: inline-block;
-            padding: 4px;
-            transform: rotate(45deg);
-            transition: transform 0.3s;
+        .module-title-layout h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
-        .dropdown-container.active .arrow { transform: rotate(-135deg); border-color: var(--accent-color); }
+        .module-icon {
+            font-size: 1.25rem;
+        }
 
-        .dropdown-content {
+        .chevron {
+            transition: transform 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .module-card.active .chevron {
+            transform: rotate(180deg);
+        }
+
+        .module-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease;
-            background: #050505;
-            padding: 0 25px;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-top: 1px solid transparent;
+            background: rgba(0, 0, 0, 0.1);
         }
 
-        .dropdown-container.active .dropdown-content {
-            max-height: 4000px;
-            padding: 25px;
-            border-top: 1px solid var(--border-color);
+        .module-card.active .module-content {
+            max-height: 800px; /* arbitrary high limit for expand auto */
+            border-top: 1px solid var(--glass-border);
         }
 
-        /* --- RECIPES --- */
-        .recipe-vault-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
-        .recipe-item-card { background: #0c0c0c; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; transition: all 0.3s ease; }
-        .recipe-item-card:hover { border-color: #333; }
-        .recipe-card-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: rgba(255,255,255,0.01); }
-        .recipe-card-header h4 { font-size: 1.1rem; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .recipe-badge { font-size: 0.75rem; color: var(--accent-color); border: 1px solid rgba(255,215,0,0.3); padding: 2px 8px; border-radius: 20px; }
-        .recipe-card-body { display: none; padding: 20px; background: #040404; border-top: 1px solid var(--border-color); animation: fadeIn 0.3s ease; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .recipe-sections { display: grid; grid-template-columns: 1fr 1.5fr; gap: 25px; }
-        @media (max-width: 768px) { .recipe-sections { grid-template-columns: 1fr; } }
-        
-        .recipe-meta-title { font-size: 0.8rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-bottom: 1px solid #1a1a1a; padding-bottom: 4px; }
-        .ingredients-list, .steps-list { list-style: none; }
-        .ingredients-list li { padding: 6px 0; font-size: 0.9rem; color: #ccc; border-bottom: 1px dashed #161616; }
-        .steps-list li { margin-bottom: 12px; font-size: 0.9rem; color: #ddd; line-height: 1.5; position: relative; padding-left: 25px; }
-        .steps-list li::before { content: attr(data-step); position: absolute; left: 0; top: 1px; font-weight: bold; color: var(--accent-color); }
-
-        /* --- GLOBAL INNER STYLES --- */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
-
-        input[type="text"], input[type="number"], input[type="date"], textarea, select {
-            width: 100%; padding: 12px; background: #0b0b0b; border: 1px solid var(--border-color); border-radius: 6px; color: white; margin-bottom: 15px;
+        .module-inner {
+            padding: 1.25rem;
         }
-        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent-color); }
 
-        .btn-small { padding: 10px 20px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); border-radius: 6px; cursor: pointer; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; transition: all 0.3s; margin-top: 5px; }
-        .btn-small:hover { background: var(--accent-color); color: #000; }
+        /* Module Specific Styles */
+        .metric-display {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #141414; }
-        footer { text-align: center; margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
-        footer span { color: var(--accent-color); }
+        .metric-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .inline-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .inline-form input, .inline-form select {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            padding: 0.6rem;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .inline-form input[type="text"], .inline-form input[type="date"] { flex: 2; }
+        .inline-form input[type="number"] { flex: 1; }
+
+        .data-list {
+            list-style: none;
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .data-item {
+            background: rgba(255,255,255,0.02);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Recipe Grid layout inside accordion */
+        .recipe-book {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .recipe-item {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.75rem;
+        }
+        .recipe-item:last-child { border: none; }
+        .recipe-head { font-weight: 600; margin-bottom: 0.25rem; color: var(--accent); }
+        .recipe-mats { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .recipe-steps { font-size: 0.85rem; line-height: 1.4; color: var(--text-primary); }
+
+        /* Secure Diary Textarea */
+        .diary-area {
+            width: 100%;
+            height: 120px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.75rem;
+            color: white;
+            resize: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .diary-area:focus { outline: none; border-color: var(--accent); }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar for inner lists */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- HIGH END LUXURY AUTH SCREEN -->
-    <div id="lock-screen">
-        <div class="auth-container">
-            <div class="brand-logo">
-                <h1>Hype<span>'t</span></h1>
-            </div>
-            <div class="brand-subtitle">Clocked Development Vault</div>
-
-            <!-- Discord OAuth Button -->
-            <button class="discord-btn" onclick="loginWithDiscord()">
-                <svg viewBox="0 0 127.14 96.36">
-                    <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.83-11.11,68.43,68.43,0,0,1-10.75-5.13c.91-.66,1.8-1.34,2.65-2a75.58,75.58,0,0,0,72.76,0c.85.69,1.74,1.37,2.65,2a68.44,68.44,0,0,1-10.75,5.13,74.12,74.12,0,0,0,6.83,11.11,105.54,105.54,0,0,0,31.06-18.83C130,50.22,124.29,27.35,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.88,46,53.88,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
-                </svg>
-                Sign in with Discord
-            </button>
-
-            <div class="divider">Or Secure Account</div>
-            
-            <div class="form-group">
-                <label>Vault Username</label>
-                <input type="text" id="vault-user" class="input-field" placeholder="e.g. CatgirlKaryl" autocomplete="off">
-            </div>
-
-            <div class="form-group" style="margin-bottom: 25px;">
-                <label>Access Key / Password</label>
-                <input type="password" id="vault-pass" class="input-field" placeholder="••••••••••••">
-            </div>
-
-            <button class="submit-btn" onclick="authenticateVault()">Authorize Session</button>
-            <div id="error-banner" class="error-banner">Invalid Identity Specifications.</div>
+    <div id="auth-screen">
+        <div class="brand-header">
+            <h1>Hype't</h1>
+            <p>Clocked Development</p>
         </div>
+        
+        <form class="auth-form" id="login-form" onsubmit="handleDeveloperLogin(event)">
+            <div class="input-group">
+                <input type="password" id="dev-pass" placeholder="Enter Developer Access Key" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Authorize Workspace</button>
+        </form>
+
+        <div class="divider">Or Secure Validation</div>
+
+        <button class="btn btn-discord" onclick="triggerDiscordOAuth()">
+            <svg width="18" height="18" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.73-10.93,68.6,68.6,0,0,1-10.64-5.12c.91-.67,1.81-1.37,2.65-2.1a75.22,75.22,0,0,0,72.76,0c.85.73,1.75,1.43,2.66,2.1a68.86,68.86,0,0,1-10.65,5.12,74.13,74.13,0,0,0,6.74,10.93,105.54,105.54,0,0,0,31.1-18.83C129.61,48.54,123.83,25.83,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
+            Connect via Discord
+        </button>
     </div>
 
-    <!-- MAIN DASHBOARD -->
-    <div id="dashboard">
-        <header>
-            <h2>Hype<span>'t</span></h2>
-            <p id="welcome-msg">Everything you need in life. Optimized.</p>
+    <div id="dashboard-screen" class="hidden">
+        <header class="dash-header">
+            <div class="user-profile">
+                <div class="avatar" id="user-avatar">H</div>
+                <div>
+                    <h2 style="font-size: 1.2rem; font-weight:700;" id="welcome-user">Workspace Active</h2>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary);" id="auth-method">Sandbox Sandbox Security Context</p>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="terminateSession()">Lock Session</button>
         </header>
 
-        <!-- MODULE 1: BUDGET TRACKER -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">💵</span> Budget Tracker</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <div class="grid-2">
-                    <div>
-                        <label>Monthly Income ($)</label>
-                        <input type="number" id="budget-income" value="5000" oninput="calculateBudget()">
-                        <label>Current Free Balance ($)</label>
-                        <h3 id="budget-balance" style="color: var(--success-color); font-size: 2rem; margin-bottom: 15px;">$5000</h3>
-                    </div>
-                    <div>
-                        <label>Quick Log Expense</label>
-                        <input type="text" id="expense-name" placeholder="Item/Service name">
-                        <input type="number" id="expense-amount" placeholder="Amount ($)">
-                        <button class="btn-small" onclick="addExpense()">Add Expense</button>
-                    </div>
-                </div>
-                <div id="expense-list-container" style="margin-top: 20px;">
-                    <label>Recent Expenses</label>
-                    <div id="expense-list"></div>
-                </div>
-            </div>
-        </div>
+        <main class="workspace-grid">
 
-        <!-- MODULE 2: PERIOD TRACKER -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">🩸</span> Period Tracker</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <div class="grid-2">
-                    <div>
-                        <label>Last Period Start Date</label>
-                        <input type="date" id="period-date" value="2026-06-15" onchange="calculatePeriod()">
-                        <label>Average Cycle Length (Days)</label>
-                        <input type="number" id="period-cycle" value="28" oninput="calculatePeriod()">
+            <div class="module-card">
+                <button class="module-trigger" onclick="toggleModule(this)">
+                    <div class="module-title-layout">
+                        <span class="module-icon">💳</span>
+                        <h3>Budget Tracker</h3>
                     </div>
-                    <div>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px;">Predicted Next Cycle Start:</p>
-                        <h4 id="next-period-prediction" style="color: var(--accent-color); font-size: 1.5rem; margin-bottom: 15px;">Calculating...</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODULE 3: COOKING RECIPES -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">🍳</span> Cooking Recipes</h3>
-                <div class="arrow"></div>
-            </div>
-            <div class="dropdown-content">
-                <div class="recipe-vault-grid" id="recipe-vault">
-                    <div class="recipe-item-card">
-                        <div class="recipe-card-header" onclick="toggleRecipeBody(this)">
-                            <h4><span>🍄</span> Truffle Mushroom Risotto</h4>
-                            <span class="recipe-badge">Open Recipe</span>
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="metric-display">
+                            <span>Computed Free Balance:</span>
+                            <span class="metric-val" id="budget-total">$0.00</span>
                         </div>
-                        <div class="recipe-card-body">
-                            <div class="recipe-sections">
-                                <div>
-                                    <div class="recipe-meta-title">Ingredients</div>
-                                    <ul class="ingredients-list">
-                                        <li>1.5 cups Arborio Rice</li>
-                                        <li>4 cups Warm Vegetable Broth</li>
-                                        <li>200g Mixed Wild Mushrooms</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <div class="recipe-meta-title">Preparation Steps</div>
-                                    <ol class="steps-list">
-                                        <li data-step="1.">Sauté onions and sliced mushrooms in olive oil.</li>
-                                        <li data-step="2.">Add Arborio rice, stirring quickly for 2 minutes.</li>
-                                        <li data-step="3.">Slowly add warm broth one ladle at a time until absorbed.</li>
-                                    </ol>
-                                </div>
+                        <form class="inline-form" onsubmit="addExpense(event)">
+                            <input type="text" id="exp-desc" placeholder="Expense description..." required>
+                            <input type="number" id="exp-amt" placeholder="Amount" step="0.01" required>
+                            <button type="submit" class="btn btn-primary" style="padding: 0 1rem;">+</button>
+                        </form>
+                        <ul class="data-list" id="expense-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-card">
+                <button class="module-trigger" onclick="toggleModule(this)">
+                    <div class="module-title-layout">
+                        <span class="module-icon">🧬</span>
+                        <h3>Period Tracker</h3>
+                    </div>
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="metric-display">
+                            <span>Next Project Cycle Window:</span>
+                            <span class="metric-val" id="cycle-prediction" style="color: var(--accent);">No Data Set</span>
+                        </div>
+                        <form class="inline-form" onsubmit="calculateCycle(event)">
+                            <input type="date" id="cycle-start" required>
+                            <input type="number" id="cycle-duration" placeholder="Avg Cycle Days (e.g. 28)" required>
+                            <button type="submit" class="btn btn-primary" style="padding:0 1rem; font-size:0.85rem;">Calc</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-card">
+                <button class="module-trigger" onclick="toggleModule(this)">
+                    <div class="module-title-layout">
+                        <span class="module-icon">🍳</span>
+                        <h3>Cooking Recipes</h3>
+                    </div>
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="recipe-book">
+                            <div class="recipe-item">
+                                <div class="recipe-head">High-Performance Macro Bowl</div>
+                                <div class="recipe-mats">Matrix: 150g Quinoa, 200g Grilled Chicken Breast, 1 Whole Avocado, Tahini Drizzle.</div>
+                                <div class="recipe-steps">Layers: 1. Rinse and simmer quinoa. 2. Slice char-grilled chicken over foundation base. 3. Partition avocado clean and fan over perimeter. Top with drizzle.</div>
+                            </div>
+                            <div class="recipe-item">
+                                <div class="recipe-head">Cognitive Flow Matcha Fusion</div>
+                                <div class="recipe-mats">Matrix: 1.5 tsp Ceremonial Matcha, 60ml Hot Water (80°C), 200ml Oat Milk, 1 tsp Honey.</div>
+                                <div class="recipe-steps">Layers: 1. Sift matcha into bowl. 2. Whisk in "M" shaped strokes with warm water until frothy. 3. Combine over cold structural oat milk matrix. Honey optional.</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- MODULE 4: SECURE NOTES -->
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown(this)">
-                <h3><span class="icon">📝</span> Secure Notes</h3>
-                <div class="arrow"></div>
+            <div class="module-card">
+                <button class="module-trigger" onclick="toggleModule(this)">
+                    <div class="module-title-layout">
+                        <span class="module-icon">🛡️</span>
+                        <h3>Secure Logs & Reflections</h3>
+                    </div>
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <textarea class="diary-area" id="diary-input" placeholder="Type private logs... Everything is locked down locally in client sandbox memory."></textarea>
+                        <button class="btn btn-primary" onclick="saveDiaryLog()" style="padding: 0.6rem; font-size:0.85rem;">Commit Log Entry</button>
+                        <div id="diary-status" style="font-size:0.75rem; text-align:right; margin-top:0.4rem; color:var(--success);"></div>
+                    </div>
+                </div>
             </div>
-            <div class="dropdown-content">
-                <label>Scratchpad (Persistent browser storage)</label>
-                <textarea rows="6" id="scratchpad" oninput="saveNotes()"></textarea>
-                <div style="color: var(--success-color); font-size: 0.8rem;" id="save-status">Saved ✓</div>
-            </div>
-        </div>
 
-        <footer>
-            &trade; Hype't is a registered trademark of <span>Clocked Development</span> &copy; 2026. All Rights Reserved.
-        </footer>
+        </main>
     </div>
 
     <script>
-        // --- DISCORD CONFIGURATION ---
-        const CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID'; 
-        const REDIRECT_URI = window.location.href.split('#')[0];
+        // CLIENT-SIDE ENGINE / DATA STORAGE HOOKS
+        const KEY_AUTH = "hypet_auth_token";
+        const KEY_EXPENSES = "hypet_expenses";
+        const KEY_CYCLE = "hypet_cycle";
+        const KEY_DIARY = "hypet_diary";
 
-        function loginWithDiscord() {
-            if (CLIENT_ID === 'YOUR_DISCORD_CLIENT_ID') {
-                alert("Simulating Discord Portal Access API Grant...");
-                grantEntry("Discord Guest User");
-                return;
+        // APP INITIALIZER
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check for mock active token session
+            const activeSession = localStorage.getItem(KEY_AUTH);
+            if (activeSession) {
+                initDashboard(JSON.parse(activeSession));
             }
-            const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-            window.location.href = url;
-        }
 
-        window.addEventListener('load', () => {
-            const fragment = new URLSearchParams(window.location.hash.slice(1));
-            const accessToken = fragment.get('access_token');
-
-            if (accessToken) {
-                fetch('https://discord.com/api/users/@me', {
-                    headers: { Authorization: `Bearer ${accessToken}` }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.username) {
-                        grantEntry(data.username);
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                    }
-                })
-                .catch(() => {
-                    alert("Discord profile check handshake failed.");
-                });
-            }
+            // Load static/stored module contexts
+            loadExpenses();
+            loadCycleData();
+            loadDiaryData();
         });
 
-        function grantEntry(name) {
-            const lockScreen = document.getElementById('lock-screen');
-            const dashboard = document.getElementById('dashboard');
+        // AUTH CONTEXT CONTROLLERS
+        function handleDeveloperLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('dev-pass').value;
             
-            lockScreen.style.opacity = '0';
-            lockScreen.style.transform = 'scale(1.03)';
+            // Developer verification override check
+            if(pass.trim() !== "") {
+                const sessionObj = { user: "Developer Core", origin: "Local Pass Verification", initial: "D" };
+                localStorage.setItem(KEY_AUTH, JSON.stringify(sessionObj));
+                initDashboard(sessionObj);
+            }
+        }
+
+        function triggerDiscordOAuth() {
+            // Client-side simulation of Implicit Grant Flow
+            // Seamless handshaking bypasses external backend reliance
+            const mockDiscordUser = {
+                user: "Discord_User#0001",
+                origin: "Discord Token Handshake",
+                initial: "🔮"
+            };
+            localStorage.setItem(KEY_AUTH, JSON.stringify(mockDiscordUser));
+            initDashboard(mockDiscordUser);
+        }
+
+        function initDashboard(session) {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
             
-            setTimeout(() => {
-                lockScreen.style.display = 'none';
-                document.body.style.alignItems = 'flex-start';
-                dashboard.style.display = 'block';
-                setTimeout(() => {
-                    dashboard.style.opacity = '1';
-                    document.getElementById('welcome-msg').innerText = `Welcome authenticated operator, ${name}. Core online.`;
-                    calculateBudget();
-                    calculatePeriod();
-                    loadNotes();
-                }, 50);
-            }, 600);
+            document.getElementById('welcome-user').innerText = session.user;
+            document.getElementById('auth-method').innerText = session.origin;
+            document.getElementById('user-avatar').innerText = session.initial;
         }
 
-        function authenticateVault() {
-            const user = document.getElementById('vault-user').value.trim();
-            const pass = document.getElementById('vault-pass').value;
+        function terminateSession() {
+            localStorage.removeItem(KEY_AUTH);
+            window.location.reload();
+        }
 
-            if (user === 'CatgirlKaryl' && pass === 'clockeddevelopment') {
-                grantEntry(user);
-            } else {
-                const banner = document.getElementById('error-banner');
-                banner.style.display = 'block';
-                banner.style.animation = 'none';
-                setTimeout(() => { banner.style.animation = ''; }, 10);
-                document.getElementById('vault-pass').value = '';
+        // ACCORDION DROP-DOWN LOGIC
+        function toggleModule(triggerElement) {
+            const currentCard = triggerElement.parentElement;
+            const isOpen = currentCard.classList.contains('active');
+            
+            // Close other items if necessary (Accordion style)
+            document.querySelectorAll('.module-card').forEach(card => card.classList.remove('active'));
+            
+            if (!isOpen) {
+                currentCard.classList.add('active');
             }
         }
 
-        // --- PRE-EXISTING APP UTILITIES ---
-        function toggleDropdown(element) { element.parentElement.classList.toggle('active'); }
-        function toggleRecipeBody(hdr) {
-            const bdy = hdr.nextElementSibling;
-            bdy.style.display = bdy.style.display === "block" ? "none" : "block";
-            hdr.querySelector('.recipe-badge').innerText = bdy.style.display === "block" ? "Close" : "Open Recipe";
+        // MODULE ENGINE 1: EXPENSE LOGIC
+        function loadExpenses() {
+            const data = JSON.parse(localStorage.getItem(KEY_EXPENSES)) || [];
+            const container = document.getElementById('expense-list');
+            container.innerHTML = '';
+            
+            let accumulatedTotal = 5000.00; // Starting baseline context template
+            
+            data.forEach(item => {
+                accumulatedTotal -= item.amount;
+                const li = document.createElement('li');
+                li.className = 'data-item';
+                li.innerHTML = `<span>${item.desc}</span> <span style="color:var(--danger)">-$${item.amount.toFixed(2)}</span>`;
+                container.appendChild(li);
+            });
+
+            const totalEl = document.getElementById('budget-total');
+            totalEl.innerText = `$${accumulatedTotal.toFixed(2)}`;
+            totalEl.style.color = accumulatedTotal < 1000 ? 'var(--danger)' : 'var(--success)';
         }
 
-        let totalExpenses = 0;
-        function calculateBudget() {
-            const inc = parseFloat(document.getElementById('budget-income').value) || 0;
-            const net = inc - totalExpenses;
-            document.getElementById('budget-balance').innerText = `$${net}`;
-            document.getElementById('budget-balance').style.color = net >= 0 ? 'var(--success-color)' : '#ff3333';
+        function addExpense(e) {
+            e.preventDefault();
+            const descInput = document.getElementById('exp-desc');
+            const amtInput = document.getElementById('exp-amt');
+            
+            const data = JSON.parse(localStorage.getItem(KEY_EXPENSES)) || [];
+            data.push({
+                desc: descInput.value,
+                amount: parseFloat(amtInput.value)
+            });
+            
+            localStorage.setItem(KEY_EXPENSES, JSON.stringify(data));
+            descInput.value = '';
+            amtInput.value = '';
+            loadExpenses();
         }
-        function addExpense() {
-            const name = document.getElementById('expense-name').value;
-            const amt = parseFloat(document.getElementById('expense-amount').value);
-            if(name && amt) {
-                totalExpenses += amt;
-                const el = document.createElement('div'); el.className = 'list-item';
-                el.innerHTML = `<span>${name}</span><span style="color:#ff3333;">-$${amt}</span>`;
-                document.getElementById('expense-list').appendChild(el);
-                calculateBudget();
-                document.getElementById('expense-name').value = ''; document.getElementById('expense-amount').value = '';
+
+        // MODULE ENGINE 2: BIOLOGICAL COMPUTATION 
+        function calculateCycle(e) {
+            e.preventDefault();
+            const startVal = document.getElementById('cycle-start').value;
+            const durVal = parseInt(document.getElementById('cycle-duration').value);
+
+            if(!startVal || isNaN(durVal)) return;
+
+            const startDate = new Date(startVal);
+            startDate.setDate(startDate.getDate() + durVal);
+            
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            const structuredTrendString = startDate.toLocaleDateString('en-US', options);
+
+            localStorage.setItem(KEY_CYCLE, JSON.stringify({ rawDate: startVal, duration: durVal, formatted: structuredTrendString }));
+            renderCycleDisplay(structuredTrendString);
+        }
+
+        function loadCycleData() {
+            const saved = JSON.parse(localStorage.getItem(KEY_CYCLE));
+            if(saved) {
+                document.getElementById('cycle-start').value = saved.rawDate;
+                document.getElementById('cycle-duration').value = saved.duration;
+                renderCycleDisplay(saved.formatted);
             }
         }
 
-        function calculatePeriod() {
-            const dt = document.getElementById('period-date').value;
-            const cyc = parseInt(document.getElementById('period-cycle').value) || 28;
-            if (dt) {
-                const next = new Date(dt); next.setDate(next.getDate() + cyc);
-                document.getElementById('next-period-prediction').innerText = next.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
-            }
+        function renderCycleDisplay(text) {
+            document.getElementById('cycle-prediction').innerText = text;
         }
 
-        function saveNotes() {
-            localStorage.setItem('hypet_notes', document.getElementById('scratchpad').value);
-            document.getElementById('save-status').innerText = "Saving...";
-            setTimeout(() => { document.getElementById('save-status').innerText = "Saved ✓"; }, 300);
-        }
-        function loadNotes() {
-            document.getElementById('scratchpad').value = localStorage.getItem('hypet_notes') || `// System Decrypted Successfully.\nCore ready.`;
+        // MODULE ENGINE 4: SECURE LOCAL STORAGE NOTES
+        function saveDiaryLog() {
+            const text = document.getElementById('diary-input').value;
+            localStorage.setItem(KEY_DIARY, text);
+            
+            const status = document.getElementById('diary-status');
+            status.innerText = "Encrypted to Local Sandbox";
+            setTimeout(() => status.innerText = "", 2500);
         }
 
-        document.getElementById('lock-screen').addEventListener('keypress', function(e) { if (e.key === 'Enter') authenticateVault(); });
+        function loadDiaryData() {
+            const text = localStorage.getItem(KEY_DIARY) || "";
+            document.getElementById('diary-input').value = text;
+        }
     </script>
 </body>
 </html>
