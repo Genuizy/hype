@@ -49,7 +49,12 @@
                     <button onclick="App.ui.switchView('budget')">📊 Financial Ledger</button>
                     <button onclick="App.ui.switchView('wellness')">🌸 Bio-Cycle & Wellness</button>
                     <button onclick="App.ui.switchView('cooking')">🍳 Culinary Matrix</button>
+                    <button onclick="App.ui.switchView('wallet')">💳 Digital Wallet</button>
+                    <button onclick="App.ui.switchView('notepad')">📝 Notepad</button>
+                    <button onclick="App.ui.switchView('sobriety')">💧 Sobriety</button>
+                    <button onclick="App.ui.switchView('friends')">👥 Friends</button>
                     <hr>
+                    <button onclick="App.ui.switchView('settings')">⚙️ Settings</button>
                     <button onclick="App.auth.logout()" class="btn-logout">🔒 Lock Workspace</button>
                 </div>
             </div>
@@ -57,98 +62,63 @@
 
         <main class="workspace-content">
             
-            <div id="view-dashboard" class="app-view grid-layout">
-                <div class="trello-card" onclick="App.ui.switchView('journal')">
-                    <h3>🧠 Mental Health Journal</h3>
-                    <p>Military-grade AES client-side encryption safely housing your thoughts.</p>
-                    <span class="card-footer">Click to maximize →</span>
+            <div id="view-dashboard" class="app-view">
+                
+                <div class="welcome-header">
+                    <h2>WELCOME BACK &lt;USERNAME&gt;</h2>
                 </div>
-                <div class="trello-card" onclick="App.ui.switchView('budget')">
-                    <h3>📊 Financial Ledger</h3>
-                    <p>Track mathematical net liquidity against active dynamic expenditures.</p>
-                    <span class="card-footer">Click to maximize →</span>
+
+                <div class="grid-layout">
+                    <div class="trello-card" onclick="App.ui.switchView('journal')">
+                        <h3>🧠 Mental Health Journal</h3>
+                        <p>Military-grade AES client-side encryption safely housing your thoughts.</p>
+                        <span class="card-footer">Click to maximize →</span>
+                    </div>
+                    <div class="trello-card" onclick="App.ui.switchView('budget')">
+                        <h3>📊 Financial Ledger</h3>
+                        <p>Track mathematical net liquidity against active dynamic expenditures.</p>
+                        <span class="card-footer">Click to maximize →</span>
+                    </div>
+                    <div class="trello-card" onclick="App.ui.switchView('wellness')">
+                        <h3>🌸 Bio-Cycle Monitor</h3>
+                        <p>Calculates algorithmic trends across somatic & biological data markers.</p>
+                        <span class="card-footer">Click to maximize →</span>
+                    </div>
+                    <div class="trello-card" onclick="App.ui.switchView('cooking')">
+                        <h3>🍳 Culinary Matrix</h3>
+                        <p>A highly modular structure containing ingredients and production layers.</p>
+                        <span class="card-footer">Click to maximize →</span>
+                    </div>
+
+                    <div class="trello-card text-only" onclick="App.ui.switchView('wallet')">
+                        DIGITAL WALLET
+                    </div>
+                    <div class="trello-card text-only" onclick="App.ui.switchView('notepad')">
+                        NOTEPAD
+                    </div>
+                    <div class="trello-card text-only" onclick="App.ui.switchView('sobriety')">
+                        SOBERNESS MONITORING
+                    </div>
+                    <div class="trello-card text-only" onclick="App.ui.switchView('friends')">
+                        FRIENDS TAB
+                    </div>
                 </div>
-                <div class="trello-card" onclick="App.ui.switchView('wellness')">
-                    <h3>🌸 Bio-Cycle Monitor</h3>
-                    <p>Calculates algorithmic trends across somatic & biological data markers.</p>
-                    <span class="card-footer">Click to maximize →</span>
+
+                <div class="full-width-box ai-box">
+                    CURRENTLY DISABLED AI CHAT BOX
                 </div>
-                <div class="trello-card" onclick="App.ui.switchView('cooking')">
-                    <h3>🍳 Culinary Matrix</h3>
-                    <p>A highly modular structure containing ingredients and production layers.</p>
-                    <span class="card-footer">Click to maximize →</span>
-                </div>
+
+                <button class="settings-floating" onclick="App.ui.switchView('settings')">
+                    SETTINGS
+                </button>
+
             </div>
 
-            <div id="view-journal" class="app-view hidden single-page-view">
-                <div class="view-header">
-                    <h2>🧠 Encrypted Reflection Vault</h2>
-                    <p>Your thoughts are encrypted locally using AES algorithms before hitting localStorage.</p>
-                </div>
-                <div class="journal-wrapper">
-                    <div class="encryption-key-zone">
-                        <input type="password" id="journal-passphrase" placeholder="Set/Enter Entry Decryption Passphrase">
-                        <small>If you lose this key, the saved journal text becomes forever unreadable.</small>
-                    </div>
-                    <textarea id="journal-input" placeholder="Begin writing your un-trackable thoughts here..."></textarea>
-                    <div class="action-row">
-                        <button class="btn-save" onclick="App.journal.save()">Encrypt & Commit Data</button>
-                        <button class="btn-load" onclick="App.journal.load()">Decrypt & Load Data</button>
-                    </div>
-                    <div id="journal-status" class="status-msg"></div>
-                </div>
-            </div>
-
-            <div id="view-budget" class="app-view hidden single-page-view">
-                <h2>📊 Algorithmic Financial Ledger</h2>
-                <div class="budget-grid">
-                    <div class="budget-form">
-                        <input type="number" id="budget-income" placeholder="Monthly Net Liquidity" oninput="App.budget.calculate()">
-                        <input type="text" id="expense-name" placeholder="Expense Item (e.g., Rent)">
-                        <input type="number" id="expense-amount" placeholder="Cost ($)">
-                        <button class="btn-primary" onclick="App.budget.addExpense()">Log Expense</button>
-                    </div>
-                    <div class="budget-results">
-                        <h3>Available Free Balance: <span id="balance-display">$0.00</span></h3>
-                        <ul id="expense-list" class="data-list"></ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="view-wellness" class="app-view hidden single-page-view">
-                <h2>🌸 Somatic Wellness & Trend Tracking</h2>
-                <div class="wellness-container">
-                    <div class="input-card">
-                        <label>Last Cycle Start Date</label>
-                        <input type="date" id="cycle-date">
-                        <label>Average Cycle Length (Days)</label>
-                        <input type="number" id="cycle-length" value="28">
-                        <button class="btn-primary" onclick="App.wellness.predictTrend()">Compute Biological Calendar</button>
-                    </div>
-                    <div id="wellness-output" class="trend-output-card">
-                        <p>Awaiting hardware-accelerated trend configuration analysis...</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="view-cooking" class="app-view hidden single-page-view">
-                <h2>🍳 Modular Production Recipes</h2>
-                <div class="recipe-matrix">
-                    <div class="recipe-card-static">
-                        <h3>Amino Acid Focused Poke Bowl</h3>
-                        <div class="matrix-pills">
-                            <span>Prep: 12 Mins</span> <span>High Macro</span> <span>Clean Fuel</span>
-                        </div>
-                        <h4>Sequential Production Layers:</h4>
-                        <ol>
-                            <li>Base: Deploy 150g washed short-grain brown rice.</li>
-                            <li>Protein Matrix: Cube 120g sashimi-grade wild salmon.</li>
-                            <li>Lipid Structure: Layer half a sliced organic avocado.</li>
-                            <li>Enzymatic Finish: Drizzle with client-side unpasteurized tamari + ginger.</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
+            <div id="view-wallet" class="app-view hidden single-page-view"><h2>💳 Digital Wallet (Placeholder)</h2><p>Data stored locally.</p></div>
+            <div id="view-notepad" class="app-view hidden single-page-view"><h2>📝 Notepad (Placeholder)</h2><p>Data stored locally.</p></div>
+            <div id="view-sobriety" class="app-view hidden single-page-view"><h2>💧 Sobriety (Placeholder)</h2><p>Data stored locally.</p></div>
+            <div id="view-friends" class="app-view hidden single-page-view"><h2>👥 Friends (Placeholder)</h2><p>No external servers.</p></div>
+            <div id="view-settings" class="app-view hidden single-page-view"><h2>⚙️ Settings (Placeholder)</h2><p>Configure local environment.</p></div>
 
         </main>
     </div>
