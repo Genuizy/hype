@@ -1,7 +1,11 @@
+/* ... (Keep existing :root and general styles up to .brand-header) ... */
 :root {
     --bg-base: #0a0b10;
-    --bg-surface: rgba(22, 26, 41, 0.65);
+    /* Updated warmer card color from reference image */
+    --bg-surface: rgba(26, 30, 48, 0.7); 
     --bg-card: rgba(30, 36, 56, 0.45);
+    /* Color for the new text-only cards (Digital Wallet etc) */
+    --bg-card-alt: rgba(36, 44, 70, 0.6); 
     --border-glass: rgba(255, 255, 255, 0.07);
     --text-primary: #f1f3f9;
     --text-secondary: #8a96b4;
@@ -28,6 +32,7 @@ body {
                       radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
 }
 
+/* ... (Keep Auth wall styles as before) ... */
 /* AUTH WALL UTILITIES */
 .auth-container {
     display: flex;
@@ -240,19 +245,44 @@ button {
     color: #ef4444;
 }
 
-/* TRELLO STYLE WORKSPACE GRID */
+/* ... (Keep existing styles up to .workspace-content) ... */
+
+/* REVISED WORKSPACE GRID MATCHING REFERENCE */
 .workspace-content {
     padding: 40px;
     max-width: 1400px;
     margin: 0 auto;
+    position: relative; /* For floating settings button */
+    min-height: calc(100vh - 80px); /* Allow room for footer elements */
 }
 
+/* Welcome Header (New) */
+.welcome-header {
+    width: 100%;
+    text-align: center;
+    background: var(--bg-surface);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.welcome-header h2 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* Unified Trello Card Grid */
 .grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
+    margin-bottom: 30px;
 }
 
+/* Core Card Style */
 .trello-card {
     background: var(--bg-card);
     border: 1px solid var(--border-glass);
@@ -290,6 +320,58 @@ button {
     margin-top: 16px;
 }
 
+/* NEW: Text-Only Cards (Matches Reference Digital Wallet, etc) */
+.trello-card.text-only {
+    background: var(--bg-card-alt);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* AI Chat Box (New) */
+.full-width-box {
+    width: 100%;
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    padding: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.ai-box {
+    background: var(--bg-card-alt);
+}
+
+/* Floating Settings Button (New) */
+.settings-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    padding: 15px 25px;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    z-index: 90;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.settings-floating:hover {
+    background: var(--bg-card);
+    transform: translateY(-2px);
+}
+
+/* ... (Keep SINGLE MAXIMIZED SUB-PAGES and other styles as before) ... */
 /* SINGLE MAXIMIZED SUB-PAGES */
 .single-page-view {
     background: var(--bg-surface);
