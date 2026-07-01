@@ -3,34 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hype't // Secure Gateway</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Hype't // Master Control Workspace</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
-<body class="auth-page">
-    <div class="auth-card">
-        <div class="brand">
-            <h1>Hype't</h1>
-            <p>Clocked Development // Everything you need, optimized.</p>
+<body>
+
+    <div id="auth-wall" class="auth-container">
+        <div class="auth-card">
+            <div class="brand-header">
+                <h1>Hype't</h1>
+                <p>Everything you need, optimized. By Clocked Development.</p>
+            </div>
+            
+            <div class="auth-methods">
+                <div class="input-group">
+                    <input type="password" id="vault-pin" placeholder="Enter Secure Master PIN...">
+                    <button onclick="App.auth.verifyPIN()" class="btn-primary">Unlock Vault</button>
+                </div>
+                
+                <div class="divider"><span>OR</span></div>
+                
+                <button onclick="App.auth.loginDiscord()" class="btn-discord">
+                    <svg width="20" height="20" viewBox="0 0 127.14 96.36"><path fill="#fff" d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.43-5c.87-.64,1.71-1.32,2.51-2a75.7,75.7,0,0,0,75.77,0c.8.7,1.64,1.37,2.51,2a68.43,68.43,0,0,1-10.43,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31.06-18.83C129.87,48.12,123.6,25.43,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
+                    Identify via Discord OAuth2
+                </button>
+            </div>
+            <p class="privacy-notice">🔒 Strictly client-side execution. Zero data packets leave this sandbox.</p>
         </div>
-        
-        <form id="loginForm">
-            <div class="input-group">
-                <input type="text" id="username" placeholder="Username" required autocomplete="off">
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Master Password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Unlock Vault</button>
-        </form>
-
-        <div class="divider"><span>OR</span></div>
-
-        <button id="discordAuthBtn" class="btn btn-discord">
-            <svg width="20" height="20" viewBox="0 0 127.14 96.36"><path fill="#fff" d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.5-5c.9-.65,1.76-1.34,2.58-2a75.58,75.58,0,0,0,73.12,0c.81.71,1.68,1.4,2.58,2a68.69,68.69,0,0,1-10.5,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31-18.83C129.87,50.22,124.27,27.42,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
-            Connect with Discord
-        </button>
     </div>
 
-    <script src="js/auth.js"></script>
+    <div id="app-workspace" class="hidden">
+        
+        <header class="workspace-header">
+            <div class="logo">Hype't <span class="badge">PROD</span></div>
+            
+            <div class="dropdown-wrapper">
+                <button class="dropdown-trigger" onclick="App.ui.toggleMenu()">
+                    Navigate Workspace ▾
+                </button>
+                <div id="dropdown-menu" class="dropdown-content hidden">
+                    <button onclick="App.ui.switchView('dashboard')">🏠 Master Grid</button>
+                    <button onclick="App.ui.switchView('journal')">🧠 Encrypted Journal</button>
+                    <button onclick="App.ui.switchView('budget')">📊 Financial Ledger</button>
+                    <button onclick="App.ui.switchView('wellness')">🌸 Bio-Cycle & Wellness</button>
+                    <button onclick="App.ui.switchView('cooking')">🍳 Culinary Matrix</button>
+                    <hr>
+                    <button onclick="App.auth.logout()" class="btn-logout">🔒 Lock Workspace</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="workspace-content">
+            
+            <div id="view-dashboard" class="app-view grid-layout">
+                <div class="trello-card" onclick="App.ui.switchView('journal')">
+                    <h3>🧠 Mental Health Journal</h3>
+                    <p>Military-grade AES client-side encryption safely housing your thoughts.</p>
+                    <span class="card-footer">Click to maximize →</span>
+                </div>
+                <div class="trello-card" onclick="App.ui.switchView('budget')">
+                    <h3>📊 Financial Ledger</h3>
+                    <p>Track mathematical net liquidity against active dynamic expenditures.</p>
+                    <span class="card-footer">Click to maximize →</span>
+                </div>
+                <div class="trello-card" onclick="App.ui.switchView('wellness')">
+                    <h3>🌸 Bio-Cycle Monitor</h3>
+                    <p>Calculates algorithmic trends across somatic & biological data markers.</p>
+                    <span class="card-footer">Click to maximize →</span>
+                </div>
+                <div class="trello-card" onclick="App.ui.switchView('cooking')">
+                    <h3>🍳 Culinary Matrix</h3>
+                    <p>A highly modular structure containing ingredients and production layers.</p>
+                    <span class="card-footer">Click to maximize →</span>
+                </div>
+            </div>
+
+            <div id="view-journal" class="app-view hidden single-page-view">
+                <div class="view-header">
+                    <h2>🧠 Encrypted Reflection Vault</h2>
+                    <p>Your thoughts are encrypted locally using AES algorithms before hitting localStorage.</p>
+                </div>
+                <div class="journal-wrapper">
+                    <div class="encryption-key-zone">
+                        <input type="password" id="journal-passphrase" placeholder="Set/Enter Entry Decryption Passphrase">
+                        <small>If you lose this key, the saved journal text becomes forever unreadable.</small>
+                    </div>
+                    <textarea id="journal-input" placeholder="Begin writing your un-trackable thoughts here..."></textarea>
+                    <div class="action-row">
+                        <button class="btn-save" onclick="App.journal.save()">Encrypt & Commit Data</button>
+                        <button class="btn-load" onclick="App.journal.load()">Decrypt & Load Data</button>
+                    </div>
+                    <div id="journal-status" class="status-msg"></div>
+                </div>
+            </div>
+
+            <div id="view-budget" class="app-view hidden single-page-view">
+                <h2>📊 Algorithmic Financial Ledger</h2>
+                <div class="budget-grid">
+                    <div class="budget-form">
+                        <input type="number" id="budget-income" placeholder="Monthly Net Liquidity" oninput="App.budget.calculate()">
+                        <input type="text" id="expense-name" placeholder="Expense Item (e.g., Rent)">
+                        <input type="number" id="expense-amount" placeholder="Cost ($)">
+                        <button class="btn-primary" onclick="App.budget.addExpense()">Log Expense</button>
+                    </div>
+                    <div class="budget-results">
+                        <h3>Available Free Balance: <span id="balance-display">$0.00</span></h3>
+                        <ul id="expense-list" class="data-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-wellness" class="app-view hidden single-page-view">
+                <h2>🌸 Somatic Wellness & Trend Tracking</h2>
+                <div class="wellness-container">
+                    <div class="input-card">
+                        <label>Last Cycle Start Date</label>
+                        <input type="date" id="cycle-date">
+                        <label>Average Cycle Length (Days)</label>
+                        <input type="number" id="cycle-length" value="28">
+                        <button class="btn-primary" onclick="App.wellness.predictTrend()">Compute Biological Calendar</button>
+                    </div>
+                    <div id="wellness-output" class="trend-output-card">
+                        <p>Awaiting hardware-accelerated trend configuration analysis...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-cooking" class="app-view hidden single-page-view">
+                <h2>🍳 Modular Production Recipes</h2>
+                <div class="recipe-matrix">
+                    <div class="recipe-card-static">
+                        <h3>Amino Acid Focused Poke Bowl</h3>
+                        <div class="matrix-pills">
+                            <span>Prep: 12 Mins</span> <span>High Macro</span> <span>Clean Fuel</span>
+                        </div>
+                        <h4>Sequential Production Layers:</h4>
+                        <ol>
+                            <li>Base: Deploy 150g washed short-grain brown rice.</li>
+                            <li>Protein Matrix: Cube 120g sashimi-grade wild salmon.</li>
+                            <li>Lipid Structure: Layer half a sliced organic avocado.</li>
+                            <li>Enzymatic Finish: Drizzle with client-side unpasteurized tamari + ginger.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
