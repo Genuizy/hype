@@ -6,13 +6,13 @@
     <title>Hype't // Clocked Development</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f0c20 0%, #06060c 100%);
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-hover: rgba(255, 255, 255, 0.06);
+            --bg-gradient: linear-gradient(135deg, #09070f 0%, #030305 100%);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-hover: rgba(255, 255, 255, 0.05);
             --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --accent: #6366f1;
+            --text-secondary: #6b7280;
+            --accent: #818cf8;
             --accent-hover: #4f46e5;
             --discord-color: #5865F2;
             --danger: #ef4444;
@@ -23,7 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -37,29 +37,28 @@
             overflow-x: hidden;
         }
 
-        /* Utilities */
         .hidden { display: none !important; }
 
-        /* Auth Screen */
+        /* Auth Gate Area */
         #auth-screen {
             width: 100%;
-            max-width: 420px;
-            padding: 2.5rem;
+            max-width: 400px;
+            padding: 3rem 2.5rem;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             text-align: center;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeIn 0.5s ease;
         }
 
         .brand-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             letter-spacing: -0.05em;
-            background: linear-gradient(to right, #fff, var(--text-secondary));
+            background: linear-gradient(to right, #fff, #9ca3af);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.25rem;
@@ -67,45 +66,48 @@
 
         .brand-header p {
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             margin-bottom: 2.5rem;
         }
 
         .auth-form {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-        }
-
-        .input-group {
-            position: relative;
+            gap: 0.85rem;
         }
 
         .input-group input {
             width: 100%;
-            padding: 1rem 1.25rem;
-            background: rgba(0, 0, 0, 0.2);
+            padding: 0.95rem 1.25rem;
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             color: #fff;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .input-group input:focus {
             outline: none;
             border-color: var(--accent);
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            min-height: 1.2rem;
         }
 
         .btn {
             width: 100%;
-            padding: 1rem;
+            padding: 0.95rem;
             border: none;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -115,11 +117,7 @@
             gap: 0.5rem;
         }
 
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
-
+        .btn-primary { background: var(--accent); color: white; }
         .btn-primary:hover { background: var(--accent-hover); }
 
         .divider {
@@ -127,63 +125,39 @@
             display: flex;
             align-items: center;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
+            color: rgba(255,255,255,0.15);
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
         }
 
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid var(--glass-border);
-        }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--glass-border); }
         .divider:not(:empty)::before { margin-right: .5em; }
         .divider:not(:empty)::after { margin-left: .5em; }
 
-        .btn-discord {
-            background: var(--discord-color);
-            color: white;
-        }
-        .btn-discord:hover { filter: brightness(1.1); }
+        .btn-discord { background: transparent; border: 1px solid var(--glass-border); color: #9ca3af; }
+        .btn-discord:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
 
-        /* Dashboard Screen */
+        /* Customization Overhaul: Modular Homepage Dropdown Index Layout */
         #dashboard-screen {
             width: 100%;
-            max-width: 1100px;
-            padding: 2rem;
+            max-width: 850px;
+            padding: 2.5rem 1.5rem;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 2.5rem;
+            animation: fadeIn 0.6s ease;
         }
 
         .dash-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--glass-border);
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            border: 2px solid var(--glass-border);
-        }
+        .meta-context h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+        .meta-context p { font-size: 0.8rem; color: var(--text-secondary); }
 
         .logout-btn {
             background: transparent;
@@ -192,374 +166,305 @@
             padding: 0.5rem 1rem;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: all 0.2s ease;
         }
-        .logout-btn:hover {
-            border-color: var(--danger);
-            color: var(--danger);
-        }
+        .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-        /* Workspace Grid Grid */
-        .workspace-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .workspace-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Dropdown Containers (Accordion Module) */
-        .module-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            overflow: hidden;
-            transition: border-color 0.3s ease;
-        }
-
-        .module-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .module-trigger {
-            width: 100%;
-            padding: 1.25rem;
-            background: transparent;
-            border: none;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .module-title-layout {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .module-title-layout h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .module-icon {
-            font-size: 1.25rem;
-        }
-
-        .chevron {
-            transition: transform 0.3s ease;
-            color: var(--text-secondary);
-        }
-
-        .module-card.active .chevron {
-            transform: rotate(180deg);
-        }
-
-        .module-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border-top: 1px solid transparent;
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .module-card.active .module-content {
-            max-height: 800px; /* arbitrary high limit for expand auto */
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .module-inner {
-            padding: 1.25rem;
-        }
-
-        /* Module Specific Styles */
-        .metric-display {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .metric-val {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--success);
-        }
-
-        .inline-form {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .inline-form input, .inline-form select {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--glass-border);
-            padding: 0.6rem;
-            border-radius: 8px;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .inline-form input[type="text"], .inline-form input[type="date"] { flex: 2; }
-        .inline-form input[type="number"] { flex: 1; }
-
-        .data-list {
-            list-style: none;
-            max-height: 150px;
-            overflow-y: auto;
+        /* Clean Dashboard Selector Row */
+        .navigation-control {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            background: rgba(0,0,0,0.2);
+            padding: 0.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
         }
 
+        .selector-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+
+        .custom-dropdown-select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .custom-dropdown-select option {
+            background: #0d0c13;
+            color: #fff;
+        }
+
+        /* Clean Workstation Panel Content */
+        .workspace-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            min-height: 320px;
+        }
+
+        .panel-heading {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .panel-heading h3 { font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+
+        /* Inner Content Logic Styles */
+        .metric-display {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .metric-val { font-size: 1.6rem; font-weight: 700; color: var(--success); }
+
+        .inline-form { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+        .inline-form input, .inline-form select {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            padding: 0.75rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        .inline-form input[type="text"], .inline-form input[type="date"] { flex: 2; }
+        .inline-form input[type="number"] { flex: 1; }
+
+        .data-list { list-style: none; max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; }
         .data-item {
-            background: rgba(255,255,255,0.02);
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            background: rgba(255,255,255,0.01);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-left: 3px solid var(--accent);
         }
 
-        /* Recipe Grid layout inside accordion */
-        .recipe-book {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .recipe-item {
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 0.75rem;
-        }
+        .recipe-book { display: flex; flex-direction: column; gap: 1.25rem; }
+        .recipe-item { border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; }
         .recipe-item:last-child { border: none; }
-        .recipe-head { font-weight: 600; margin-bottom: 0.25rem; color: var(--accent); }
-        .recipe-mats { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
-        .recipe-steps { font-size: 0.85rem; line-height: 1.4; color: var(--text-primary); }
+        .recipe-head { font-weight: 600; margin-bottom: 0.4rem; color: var(--accent); }
+        .recipe-mats { font-size: 0.85rem; color: #9ca3af; margin-bottom: 0.4rem; }
+        .recipe-steps { font-size: 0.9rem; line-height: 1.5; color: #d1d5db; }
 
-        /* Secure Diary Textarea */
         .diary-area {
             width: 100%;
-            height: 120px;
-            background: rgba(0,0,0,0.3);
+            height: 140px;
+            background: rgba(0,0,0,0.4);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            padding: 0.75rem;
+            padding: 1rem;
             color: white;
             resize: none;
             font-size: 0.9rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
         .diary-area:focus { outline: none; border-color: var(--accent); }
 
-        /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Custom Scrollbar for inner lists */
-        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
     </style>
 </head>
 <body>
 
+    <!-- SECURE AUTH SYSTEM -->
     <div id="auth-screen">
         <div class="brand-header">
             <h1>Hype't</h1>
             <p>Clocked Development</p>
         </div>
         
-        <form class="auth-form" id="login-form" onsubmit="handleDeveloperLogin(event)">
+        <form class="auth-form" id="login-form" onsubmit="handleSecureLogin(event)">
             <div class="input-group">
-                <input type="password" id="dev-pass" placeholder="Enter Developer Access Key" required>
+                <input type="text" id="dev-user" placeholder="Identity Handle" required autocomplete="off">
             </div>
-            <button type="submit" class="btn btn-primary">Authorize Workspace</button>
+            <div class="input-group">
+                <input type="password" id="dev-pass" placeholder="Access Crypt Key" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Decrypt Workspace</button>
+            <div class="error-message" id="auth-error"></div>
         </form>
 
-        <div class="divider">Or Secure Validation</div>
+        <div class="divider">External Interface</div>
 
         <button class="btn btn-discord" onclick="triggerDiscordOAuth()">
-            <svg width="18" height="18" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.73-10.93,68.6,68.6,0,0,1-10.64-5.12c.91-.67,1.81-1.37,2.65-2.1a75.22,75.22,0,0,0,72.76,0c.85.73,1.75,1.43,2.66,2.1a68.86,68.86,0,0,1-10.65,5.12,74.13,74.13,0,0,0,6.74,10.93,105.54,105.54,0,0,0,31.1-18.83C129.61,48.54,123.83,25.83,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
-            Connect via Discord
+            <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor" style="opacity:0.6;"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.73-10.93,68.6,68.6,0,0,1-10.64-5.12c.91-.67,1.81-1.37,2.65-2.1a75.22,75.22,0,0,0,72.76,0c.85.73,1.75,1.43,2.66,2.1a68.86,68.86,0,0,1-10.65,5.12,74.13,74.13,0,0,0,6.74,10.93,105.54,105.54,0,0,0,31.1-18.83C129.61,48.54,123.83,25.83,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
+            OAuth2 Entry Locked
         </button>
     </div>
 
+    <!-- CLEAN HIGH-END DASHBOARD OVERHAUL -->
     <div id="dashboard-screen" class="hidden">
         <header class="dash-header">
-            <div class="user-profile">
-                <div class="avatar" id="user-avatar">H</div>
-                <div>
-                    <h2 style="font-size: 1.2rem; font-weight:700;" id="welcome-user">Workspace Active</h2>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary);" id="auth-method">Sandbox Sandbox Security Context</p>
-                </div>
+            <div class="meta-context">
+                <h2 id="welcome-user">Workspace Sandbox</h2>
+                <p id="auth-method">Clocked Development Root Ecosystem</p>
             </div>
-            <button class="logout-btn" onclick="terminateSession()">Lock Session</button>
+            <button class="logout-btn" onclick="terminateSession()">Lock Terminal</button>
         </header>
 
-        <main class="workspace-grid">
+        <!-- Dynamic Dropdown Component Navigation Structure -->
+        <nav class="navigation-control">
+            <span class="selector-label">Select Workspace Focus</span>
+            <select class="custom-dropdown-select" id="section-selector" onchange="switchSection(this.value)">
+                <option value="budget">💳 Budget Ledger Framework</option>
+                <option value="period">🧬 Biological Cycle Trendline</option>
+                <option value="recipes">🍳 Culinary Matrix Repositories</option>
+                <option value="diary">🛡️ Secure Isolation Notes & Logs</option>
+            </select>
+        </nav>
 
-            <div class="module-card">
-                <button class="module-trigger" onclick="toggleModule(this)">
-                    <div class="module-title-layout">
-                        <span class="module-icon">💳</span>
-                        <h3>Budget Tracker</h3>
+        <!-- Singular Main Panel Content Interface -->
+        <main class="workspace-panel">
+            
+            <!-- SECTION 1: BUDGET TOOL -->
+            <div id="panel-budget" class="panel-section">
+                <div class="panel-heading">
+                    <h3>💳 Budget Tracker</h3>
+                </div>
+                <div class="metric-display">
+                    <span>Remaining Dynamic Liquid Balance:</span>
+                    <span class="metric-val" id="budget-total">$0.00</span>
+                </div>
+                <form class="inline-form" onsubmit="addExpense(event)">
+                    <input type="text" id="exp-desc" placeholder="Expense description identifier..." required>
+                    <input type="number" id="exp-amt" placeholder="Value ($)" step="0.01" required>
+                    <button type="submit" class="btn btn-primary" style="width: auto; padding: 0 1.5rem;">Log</button>
+                </form>
+                <ul class="data-list" id="expense-list"></ul>
+            </div>
+
+            <!-- SECTION 2: TREND ESTIMATION TOOL -->
+            <div id="panel-period" class="panel-section hidden">
+                <div class="panel-heading">
+                    <h3>🧬 Period Tracker</h3>
+                </div>
+                <div class="metric-display">
+                    <span>Computed Project Cycle Boundary:</span>
+                    <span class="metric-val" id="cycle-prediction" style="color: var(--accent);">Awaiting parameters</span>
+                </div>
+                <form class="inline-form" onsubmit="calculateCycle(event)">
+                    <input type="date" id="cycle-start" required>
+                    <input type="number" id="cycle-duration" placeholder="Cycle Span Interval (Days)" required>
+                    <button type="submit" class="btn btn-primary" style="width: auto; padding: 0 1.5rem;">Compute</button>
+                </form>
+            </div>
+
+            <!-- SECTION 3: CULINARY MATRIX -->
+            <div id="panel-recipes" class="panel-section hidden">
+                <div class="panel-heading">
+                    <h3>🍳 Cooking Recipes</h3>
+                </div>
+                <div class="recipe-book">
+                    <div class="recipe-item">
+                        <div class="recipe-head">High-Performance Macro Bowl</div>
+                        <div class="recipe-mats">Matrix: 150g Quinoa, 200g Grilled Chicken Breast, 1 Whole Avocado, Tahini Drizzle.</div>
+                        <div class="recipe-steps">Layers: 1. Rinse and simmer quinoa. 2. Slice char-grilled chicken over foundation base. 3. Partition avocado clean and fan over perimeter. Top with drizzle.</div>
                     </div>
-                    <span class="chevron">▼</span>
-                </button>
-                <div class="module-content">
-                    <div class="module-inner">
-                        <div class="metric-display">
-                            <span>Computed Free Balance:</span>
-                            <span class="metric-val" id="budget-total">$0.00</span>
-                        </div>
-                        <form class="inline-form" onsubmit="addExpense(event)">
-                            <input type="text" id="exp-desc" placeholder="Expense description..." required>
-                            <input type="number" id="exp-amt" placeholder="Amount" step="0.01" required>
-                            <button type="submit" class="btn btn-primary" style="padding: 0 1rem;">+</button>
-                        </form>
-                        <ul class="data-list" id="expense-list"></ul>
+                    <div class="recipe-item">
+                        <div class="recipe-head">Cognitive Flow Matcha Fusion</div>
+                        <div class="recipe-mats">Matrix: 1.5 tsp Ceremonial Matcha, 60ml Hot Water (80°C), 200ml Oat Milk, 1 tsp Honey.</div>
+                        <div class="recipe-steps">Layers: 1. Sift matcha into bowl. 2. Whisk in "M" shaped strokes with warm water until frothy. 3. Combine over cold structural oat milk matrix. Honey optional.</div>
                     </div>
                 </div>
             </div>
 
-            <div class="module-card">
-                <button class="module-trigger" onclick="toggleModule(this)">
-                    <div class="module-title-layout">
-                        <span class="module-icon">🧬</span>
-                        <h3>Period Tracker</h3>
-                    </div>
-                    <span class="chevron">▼</span>
-                </button>
-                <div class="module-content">
-                    <div class="module-inner">
-                        <div class="metric-display">
-                            <span>Next Project Cycle Window:</span>
-                            <span class="metric-val" id="cycle-prediction" style="color: var(--accent);">No Data Set</span>
-                        </div>
-                        <form class="inline-form" onsubmit="calculateCycle(event)">
-                            <input type="date" id="cycle-start" required>
-                            <input type="number" id="cycle-duration" placeholder="Avg Cycle Days (e.g. 28)" required>
-                            <button type="submit" class="btn btn-primary" style="padding:0 1rem; font-size:0.85rem;">Calc</button>
-                        </form>
-                    </div>
+            <!-- SECTION 4: DIARY SECURE MEMORY -->
+            <div id="panel-diary" class="panel-section hidden">
+                <div class="panel-heading">
+                    <h3>🛡️ Secure Logs & Reflections</h3>
                 </div>
-            </div>
-
-            <div class="module-card">
-                <button class="module-trigger" onclick="toggleModule(this)">
-                    <div class="module-title-layout">
-                        <span class="module-icon">🍳</span>
-                        <h3>Cooking Recipes</h3>
-                    </div>
-                    <span class="chevron">▼</span>
-                </button>
-                <div class="module-content">
-                    <div class="module-inner">
-                        <div class="recipe-book">
-                            <div class="recipe-item">
-                                <div class="recipe-head">High-Performance Macro Bowl</div>
-                                <div class="recipe-mats">Matrix: 150g Quinoa, 200g Grilled Chicken Breast, 1 Whole Avocado, Tahini Drizzle.</div>
-                                <div class="recipe-steps">Layers: 1. Rinse and simmer quinoa. 2. Slice char-grilled chicken over foundation base. 3. Partition avocado clean and fan over perimeter. Top with drizzle.</div>
-                            </div>
-                            <div class="recipe-item">
-                                <div class="recipe-head">Cognitive Flow Matcha Fusion</div>
-                                <div class="recipe-mats">Matrix: 1.5 tsp Ceremonial Matcha, 60ml Hot Water (80°C), 200ml Oat Milk, 1 tsp Honey.</div>
-                                <div class="recipe-steps">Layers: 1. Sift matcha into bowl. 2. Whisk in "M" shaped strokes with warm water until frothy. 3. Combine over cold structural oat milk matrix. Honey optional.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="module-card">
-                <button class="module-trigger" onclick="toggleModule(this)">
-                    <div class="module-title-layout">
-                        <span class="module-icon">🛡️</span>
-                        <h3>Secure Logs & Reflections</h3>
-                    </div>
-                    <span class="chevron">▼</span>
-                </button>
-                <div class="module-content">
-                    <div class="module-inner">
-                        <textarea class="diary-area" id="diary-input" placeholder="Type private logs... Everything is locked down locally in client sandbox memory."></textarea>
-                        <button class="btn btn-primary" onclick="saveDiaryLog()" style="padding: 0.6rem; font-size:0.85rem;">Commit Log Entry</button>
-                        <div id="diary-status" style="font-size:0.75rem; text-align:right; margin-top:0.4rem; color:var(--success);"></div>
-                    </div>
-                </div>
+                <textarea class="diary-area" id="diary-input" placeholder="Initialize deep client sandboxed session writing... This memory block is fully self-contained inside native parameters."></textarea>
+                <button class="btn btn-primary" onclick="saveDiaryLog()" style="width: auto; padding: 0.75rem 2rem; margin-left: auto;">Save to Core Sandbox</button>
+                <div id="diary-status" style="font-size:0.8rem; text-align:right; margin-top:0.5rem; color:var(--success); min-height: 1rem;"></div>
             </div>
 
         </main>
     </div>
 
     <script>
-        // CLIENT-SIDE ENGINE / DATA STORAGE HOOKS
+        // STRICT SPECIFIED SYSTEM CREDENTIALS
+        const AUTH_USER = "CatgirlKaryl";
+        const AUTH_PASS = "clockeddevelopment";
+
         const KEY_AUTH = "hypet_auth_token";
         const KEY_EXPENSES = "hypet_expenses";
         const KEY_CYCLE = "hypet_cycle";
         const KEY_DIARY = "hypet_diary";
 
-        // APP INITIALIZER
         window.addEventListener('DOMContentLoaded', () => {
-            // Check for mock active token session
             const activeSession = localStorage.getItem(KEY_AUTH);
             if (activeSession) {
-                initDashboard(JSON.parse(activeSession));
+                // Double check persistent tokens match the strict credentials
+                const token = JSON.parse(activeSession);
+                if (token.user === AUTH_USER) {
+                    initDashboard(token);
+                } else {
+                    terminateSession();
+                }
             }
-
-            // Load static/stored module contexts
             loadExpenses();
             loadCycleData();
             loadDiaryData();
         });
 
-        // AUTH CONTEXT CONTROLLERS
-        function handleDeveloperLogin(e) {
+        // ENFORCED LOGIN SECURITY PROTOCOL
+        function handleSecureLogin(e) {
             e.preventDefault();
-            const pass = document.getElementById('dev-pass').value;
-            
-            // Developer verification override check
-            if(pass.trim() !== "") {
-                const sessionObj = { user: "Developer Core", origin: "Local Pass Verification", initial: "D" };
+            const userIn = document.getElementById('dev-user').value;
+            const passIn = document.getElementById('dev-pass').value;
+            const errorEl = document.getElementById('auth-error');
+
+            if (userIn === AUTH_USER && passIn === AUTH_PASS) {
+                errorEl.innerText = "";
+                const sessionObj = { user: AUTH_USER, origin: "Verified Root Execution" };
                 localStorage.setItem(KEY_AUTH, JSON.stringify(sessionObj));
                 initDashboard(sessionObj);
+            } else {
+                errorEl.innerText = "Access Denied: Invalid Security Signature";
+                document.getElementById('dev-pass').value = "";
             }
         }
 
+        // CONTROLLED EXPLICIT DISCORD BLOCK
         function triggerDiscordOAuth() {
-            // Client-side simulation of Implicit Grant Flow
-            // Seamless handshaking bypasses external backend reliance
-            const mockDiscordUser = {
-                user: "Discord_User#0001",
-                origin: "Discord Token Handshake",
-                initial: "🔮"
-            };
-            localStorage.setItem(KEY_AUTH, JSON.stringify(mockDiscordUser));
-            initDashboard(mockDiscordUser);
+            const errorEl = document.getElementById('auth-error');
+            errorEl.innerText = "Discord connection is not configured yet.";
         }
 
         function initDashboard(session) {
             document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('dashboard-screen').classList.remove('hidden');
-            
-            document.getElementById('welcome-user').innerText = session.user;
-            document.getElementById('auth-method').innerText = session.origin;
-            document.getElementById('user-avatar').innerText = session.initial;
+            document.getElementById('welcome-user').innerText = `Active Account: ${session.user}`;
         }
 
         function terminateSession() {
@@ -567,32 +472,30 @@
             window.location.reload();
         }
 
-        // ACCORDION DROP-DOWN LOGIC
-        function toggleModule(triggerElement) {
-            const currentCard = triggerElement.parentElement;
-            const isOpen = currentCard.classList.contains('active');
-            
-            // Close other items if necessary (Accordion style)
-            document.querySelectorAll('.module-card').forEach(card => card.classList.remove('active'));
-            
-            if (!isOpen) {
-                currentCard.classList.add('active');
+        // HOMEPAGE STYLING CUSTOMIZATION: Dropdown Section Switcher Mechanics
+        function switchSection(targetSectionId) {
+            document.querySelectorAll('.panel-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            const targeted = document.getElementById(`panel-${targetSectionId}`);
+            if (targeted) {
+                targeted.classList.remove('hidden');
             }
         }
 
-        // MODULE ENGINE 1: EXPENSE LOGIC
+        // ENGINE SYSTEM 1: BUDGET CALCULATOR
         function loadExpenses() {
             const data = JSON.parse(localStorage.getItem(KEY_EXPENSES)) || [];
             const container = document.getElementById('expense-list');
             container.innerHTML = '';
             
-            let accumulatedTotal = 5000.00; // Starting baseline context template
+            let accumulatedTotal = 5000.00; 
             
             data.forEach(item => {
                 accumulatedTotal -= item.amount;
                 const li = document.createElement('li');
                 li.className = 'data-item';
-                li.innerHTML = `<span>${item.desc}</span> <span style="color:var(--danger)">-$${item.amount.toFixed(2)}</span>`;
+                li.innerHTML = `<span>${item.desc}</span> <span style="color:var(--danger); font-weight: 600;">-$${item.amount.toFixed(2)}</span>`;
                 container.appendChild(li);
             });
 
@@ -618,7 +521,7 @@
             loadExpenses();
         }
 
-        // MODULE ENGINE 2: BIOLOGICAL COMPUTATION 
+        // ENGINE SYSTEM 2: CALENDAR CALCULATION
         function calculateCycle(e) {
             e.preventDefault();
             const startVal = document.getElementById('cycle-start').value;
@@ -630,10 +533,10 @@
             startDate.setDate(startDate.getDate() + durVal);
             
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            const structuredTrendString = startDate.toLocaleDateString('en-US', options);
+            const trendText = startDate.toLocaleDateString('en-US', options);
 
-            localStorage.setItem(KEY_CYCLE, JSON.stringify({ rawDate: startVal, duration: durVal, formatted: structuredTrendString }));
-            renderCycleDisplay(structuredTrendString);
+            localStorage.setItem(KEY_CYCLE, JSON.stringify({ rawDate: startVal, duration: durVal, formatted: trendText }));
+            document.getElementById('cycle-prediction').innerText = trendText;
         }
 
         function loadCycleData() {
@@ -641,22 +544,18 @@
             if(saved) {
                 document.getElementById('cycle-start').value = saved.rawDate;
                 document.getElementById('cycle-duration').value = saved.duration;
-                renderCycleDisplay(saved.formatted);
+                document.getElementById('cycle-prediction').innerText = saved.formatted;
             }
         }
 
-        function renderCycleDisplay(text) {
-            document.getElementById('cycle-prediction').innerText = text;
-        }
-
-        // MODULE ENGINE 4: SECURE LOCAL STORAGE NOTES
+        // ENGINE SYSTEM 4: LOG COMMITS
         function saveDiaryLog() {
             const text = document.getElementById('diary-input').value;
             localStorage.setItem(KEY_DIARY, text);
             
             const status = document.getElementById('diary-status');
-            status.innerText = "Encrypted to Local Sandbox";
-            setTimeout(() => status.innerText = "", 2500);
+            status.innerText = "State persistent in sandbox storage";
+            setTimeout(() => status.innerText = "", 3000);
         }
 
         function loadDiaryData() {
